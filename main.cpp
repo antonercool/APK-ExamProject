@@ -1,4 +1,4 @@
-#include "StockMarketRender/UIProvider.hpp"
+#include "UIProvider.hpp"
 #include <iostream>
 
 using namespace Render;
