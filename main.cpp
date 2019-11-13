@@ -3,6 +3,7 @@
 #include "Stock.cpp"
 #include "StockLoader.hpp"
 #include <boost/array.hpp>
+#include "StockSimulator.hpp"
 using namespace Render;
 
 int main(){
@@ -11,13 +12,7 @@ int main(){
     UIProvider cmdRender;
 
 
-    StockLoader sl;
-
-    std::vector<Stock>* stocks = sl.loadStocks("./stockDb");
-
-    for(Stock stock: *stocks){
-        std::cout << stock << std::endl;
-    }
+    
 
     cmdRender.setColor(Render::Color::BLUE);
     cmdRender.print("This should be blue\n");
@@ -35,7 +30,7 @@ int main(){
     cmdRender.resetToDefaultColor();
     cmdRender.print("This should have default color\n");
     
-    getchar();
+    //getchar();
 
 
 }
