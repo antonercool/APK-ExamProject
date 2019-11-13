@@ -1,11 +1,10 @@
+#pragma once
 #include <boost/filesystem.hpp>
 #include <future>
 #include <iostream>
 #include <string>
 #include <thread>
 #include <vector>
-
-namespace fs = boost::filesystem;
 
 class StockLoader
 {
@@ -20,11 +19,9 @@ public:
 
   };
 
-  std::vector<Stock>* loadStocks(std::string directory)
+  std::vector<Stock> *loadStocks(std::string directory)
   {
-    //std::vector<Stock> stockList_;
     stockList_.clear();
-
     std::vector<std::future<Stock>> futures;
 
     boost::filesystem::path path = directory;
@@ -32,30 +29,27 @@ public:
     {
       std::promise<Stock> p;
       std::future<Stock>  f = p.get_future();
-      futures.push_back(std::move(f));
+      futures.push_back(std::move(f)); // Move future resource to vector
 
       std::thread(
           [entry](std::promise<Stock> p) {
-            std::ifstream stockFile(entry.path().c_str());
-            Stock         s = *std::istream_iterator<Stock>(stockFile);
+            std::ifstream stockFile(entry.path());
+            Stock         s = *std::istream_iterator<Stock>(
+                stockFile); // Constructor reads first line in db-file using
+                            // operator>>, dereference returns current stream
+                            // element
 
             p.set_value(s);
             stockFile.close();
           },
-          std::move(p))
+          std::move(p)) // Move promise to thead function
           .detach();
     }
 
-    //for (std::future<Stock> const &future : futures)
-    //{
-    //  future.wait();
-    //}
-
     for (std::future<Stock> &future : futures)
     {
-        future.wait();
-        stockList_.push_back(future.get());
-      //std::cout << future.get() << std::endl;
+      future.wait();
+      stockList_.push_back(future.get());
     }
 
     return &stockList_;
