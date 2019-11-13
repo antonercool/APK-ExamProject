@@ -8,14 +8,14 @@
             "name": "Build DEBUG ---> run",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/windows/program.exe",
+            "program": "${workspaceFolder}/bin/linux/program",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": true,  //set to true to see output in cmd instead
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
+            "miDebuggerPath": "gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -30,14 +30,14 @@
             "name": "Build RELEASE --> run",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/windows/program.exe",
+            "program": "${workspaceFolder}/bin/linux/program",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false, //set to true to see output in cmd instead
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
+            "miDebuggerPath": "gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

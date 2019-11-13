@@ -15,7 +15,7 @@ OBJS			=$(addprefix ${BUILD_PATH}/, $(notdir ${SRC:%.cpp=%.o}))
 
 #config
 EXE 			=program
-HOST 			=windows
+HOST 			=linux
 DEBUG 			=false
 #Compiler setUp
 # To build boost to windows run bootstrap.bat then ./b2 -a toolset=gcc
