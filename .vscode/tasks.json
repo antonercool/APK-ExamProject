@@ -1,0 +1,27 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build DEBUG & run",
+            "command": "make",
+            "args": [
+                "DEBUG = true"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Build RELEASE & run",
+            "command": "make",
+            "args": [
+                "DEBUG = false"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
