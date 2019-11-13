@@ -22,6 +22,7 @@ namespace Render{
         void setColor(Color);
         void outPutWithColor(Color, std::string);
         void resetToDefaultColor();
+        void print(std::string);
 
         void initUI();   // Initialize base CMD GUI
         void clearUI();  // Fully Clear CMD GUI

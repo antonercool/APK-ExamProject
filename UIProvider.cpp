@@ -18,11 +18,16 @@ void UIProvider::setColor(Color newColor){
 }
 
 void UIProvider::outPutWithColor(Color color, std::string outPutString){
-    std::cout << "\033[" << color << outPutString;
+    std::cout << "\033[" << color <<"m" << outPutString << "\033[0m";
 }
 
 void UIProvider::resetToDefaultColor(){
     this->_currentColor = Color::DEFAULT;
+}
+
+void UIProvider::print(std::string outPutString){
+    std::cout << "\033[" << this->_currentColor <<"m" << outPutString << "\033[0m";
+    
 }
 
 // Initialize base CMD GUI
