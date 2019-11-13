@@ -13,12 +13,11 @@ int main(){
 
     //cmdRender.outPutWithColor(Render::Color::GREEN, "HelloWorld");
 
-    Stock s;
-
     StockLoader sl;
 
-    sl.loadStocks("");
+    std::vector<Stock>* stocks = sl.loadStocks("./stockDb");
 
-    //boost::array<int, 4> ar = {1,2,3,4};
-
+    for(Stock stock: *stocks){
+        std::cout << stock << std::endl;
+    }
 }

@@ -29,7 +29,7 @@ CXX 			= g++
 CXXFLAGS 		=-Wall -std=c++17 $(INCLUDEPATHS)	 # -I. = path to include files '. mean here # -Wall Show all Possible warnins
 
 #linker flags -- please update the names for your lib
-LDFLAGS 		= -lboost_system -lboost_filesystem #-L$(BOOSTLIB) -lboost_chrono-mgw82-mt-s-x32-1_71 -lboost_thread-mgw82-mt-s-x32-1_71 -lboost_system-mgw82-mt-s-x32-1_71
+LDFLAGS 		= -lboost_system -lboost_filesystem -lpthread #-L$(BOOSTLIB) -lboost_chrono-mgw82-mt-s-x32-1_71 -lboost_thread-mgw82-mt-s-x32-1_71 -lboost_system-mgw82-mt-s-x32-1_71
 
 ifeq ($(DEBUG), true)
 CXXFLAGS += -g
@@ -50,7 +50,6 @@ endif
 ifeq (${HOST}, linux)
 BUILD_DIR			= build/${HOST}
 BIN_DIR 			= bin/${HOST}
-CXXFLAGS 			+= -pthread
 CLEAN_CMD1 			= -rm -rf ${BUILD_DIR}  
 CLEAN_CMD2			= -rm -rf ${BIN_DIR} 
 MAKE_FOLDER_BUILD 	= mkdir -p ${BUILD_DIR}  

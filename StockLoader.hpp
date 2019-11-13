@@ -1,11 +1,11 @@
+#include <boost/filesystem.hpp>
 #include <future>
 #include <iostream>
 #include <string>
 #include <thread>
 #include <vector>
-#include <boost/filesystem.hpp>
 
-namespace fs = boost::filesystem; 
+namespace fs = boost::filesystem;
 
 class StockLoader
 {
@@ -20,71 +20,44 @@ public:
 
   };
 
-  void loadStocks(std::string directory)
+  std::vector<Stock>* loadStocks(std::string directory)
   {
+    //std::vector<Stock> stockList_;
     stockList_.clear();
 
-    
+    std::vector<std::future<Stock>> futures;
 
-    //std::ifstream pFile( fileName.c_str() );
-//
-    //std::copy(std::istream_iterator<Product>(pFile),
-    //     std::istream_iterator<Product>(),
-    //     std::back_inserter(pl));
+    boost::filesystem::path path = directory;
+    for (const auto &entry : boost::filesystem::directory_iterator(path))
+    {
+      std::promise<Stock> p;
+      std::future<Stock>  f = p.get_future();
+      futures.push_back(std::move(f));
 
-    //boost::filesystem::path p = boost::filesystem::current_path();
-    //boost::filesystem::directory_iterator it{p};
-    //while (it != boost::filesystem::directory_iterator{})
-    //std::cout << *it++ << '\n';
+      std::thread(
+          [entry](std::promise<Stock> p) {
+            std::ifstream stockFile(entry.path().c_str());
+            Stock         s = *std::istream_iterator<Stock>(stockFile);
 
-    boost::filesystem::path path = "./stockDb";
-    for (const auto & entry : boost::filesystem::directory_iterator(path))
-        std::cout << entry.path() << std::endl;
-//
-    //for (const auto & entry : fs::directory_iterator(path))
-    //    std::cout << entry.path() << std::endl;
-         
-//path p("D:/AnyFolder");
-    //for (auto i = boost::filesystem::directory_iterator(path); i != boost::filesystem::directory_iterator(); i++)
+            p.set_value(s);
+            stockFile.close();
+          },
+          std::move(p))
+          .detach();
+    }
+
+    //for (std::future<Stock> const &future : futures)
     //{
-    //    if (!is_directory(i->path())) //we eliminate directories
-    //    {
-    //        std::cout << i->path().filename().string() << std::endl;
-    //    }
+    //  future.wait();
     //}
 
+    for (std::future<Stock> &future : futures)
+    {
+        future.wait();
+        stockList_.push_back(future.get());
+      //std::cout << future.get() << std::endl;
+    }
 
-    
-    //for (const auto & entry : boost::filesystem::directory_iterator(path)){
-    //    std::cout << entry.path() << std::endl;
-    //}
-        
-
-
-  //while( !pFile.eof() )
-  //{
-  //  Product p;
-  //  pFile >> p;
-  //  if( pFile ) pl.push_back( p );
-  //}
-
-  //pFile.close();
-
-    //std::future<int> futures[] = {std::async([]() { return 1; }),
-    //                              std::async([]() { return 1; })};
-
-    //std::future<std::vector<std::future<int>>> any_f = when_any(begin(futures), end(futures));
-
-    /* future from a promise */
-    //std::promise<int> p;
-    //std::future<int>  f = p.get_future();
-    //std::thread([](std::promise<int> p) { p.set_value_at_thread_exit(9); },
-    //            std::move(p))
-    //    .detach();
-    //
-    // std::cout << "Waiting..." << std::flush;
-    //
-    // f.wait();
-    // std::cout << "Done!\nResult is: " << f.get() << '\n';
+    return &stockList_;
   }
 };

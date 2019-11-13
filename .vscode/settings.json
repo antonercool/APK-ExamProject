@@ -65,6 +65,7 @@
         "future": "cpp",
         "mutex": "cpp",
         "thread": "cpp",
-        "codecvt": "cpp"
+        "codecvt": "cpp",
+        "cinttypes": "cpp"
     }
 }
