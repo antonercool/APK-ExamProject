@@ -1,6 +1,9 @@
-#include <iostream>
-#include "Stock.hpp"
 #include "StockRender/UIProvider.hpp"
+#include "Stock.cpp"
+#include "StockLoader.hpp"
+#include "StockSimulator.hpp"
+#include <iostream>
+#include <boost/array.hpp>
 
 using namespace Render;
 
@@ -25,8 +28,7 @@ int main(){
     cmdRender.resetToDefaultColor();
     cmdRender.print("This should have default color\n");
     
-    Stock s;
+    //getchar();
 
-    getchar();
 
 }
