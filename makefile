@@ -9,7 +9,7 @@ BUILD_PATH		=$(BUILD_DIR)
 BIN_PATH		=$(BIN_DIR)
 
 # Files
-SRC				=main.cpp
+SRC				=main.cpp UIProvider.cpp
 DEPS			=$(addprefix ${BUILD_PATH}/, $(notdir ${SRC:%.cpp=%.d}))
 OBJS			=$(addprefix ${BUILD_PATH}/, $(notdir ${SRC:%.cpp=%.o}))
 

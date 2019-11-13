@@ -1,5 +1,6 @@
-#include "StockMarketRender/UIProvider.hpp"
+#include "UIProvider.hpp"
 #include <iostream>
+#include "Stock.hpp"
 
 using namespace Render;
 
@@ -10,5 +11,7 @@ int main(){
     UIProvider cmdRender;
 
     cmdRender.outPutWithColor(Render::Color::GREEN, "HelloWorld");
+
+    Stock s;
 
 }
