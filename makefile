@@ -19,7 +19,8 @@ HOST 			=linux
 DEBUG 			=false
 
 # All Folders should be added here
-VPATH 		    =$(SRC_PATH) StockRender
+VPATH=$(shell find $(SRC_PATH) -name '*.cpp' -exec dirname {} \; | uniq)
+#VPATH 		    =$(SRC_PATH) StockRender
 #Compiler setUp
 # To build boost to windows run bootstrap.bat then ./b2 -a toolset=gcc
 # To build boost to linux run bootstrap.bat then ./b2
