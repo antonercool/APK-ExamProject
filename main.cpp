@@ -1,6 +1,7 @@
 #include "UIProvider.hpp"
 #include <iostream>
-#include "Stock.hpp"
+#include "Stock.cpp"
+#include "StockLoader.hpp"
 
 using namespace Render;
 

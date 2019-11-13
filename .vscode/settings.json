@@ -57,6 +57,13 @@
         "optional": "cpp",
         "random": "cpp",
         "string_view": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "chrono": "cpp",
+        "condition_variable": "cpp",
+        "ctime": "cpp",
+        "ratio": "cpp",
+        "future": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp"
     }
 }
