@@ -1,14 +1,14 @@
 #include "Render/UIProvider.hpp"
+#include "Render/StockRender.hpp"
 #include "Simulator/StockSimulator.hpp"
+#include "Analyser/StockAnalyser.hpp"
 #include <iostream>
 #include <boost/array.hpp>
-
-using namespace Render;
 
 int main(){
 
 
-    UIProvider cmdRender;
+    Render::UIProvider cmdRender;
 
     cmdRender.setColor(Render::Color::BLUE);
     cmdRender.print("This should be blue\n");
@@ -26,17 +26,28 @@ int main(){
     cmdRender.resetToDefaultColor();
     cmdRender.print("This should have default color\n");
 
+
+
+
+
     StockLoader stockLoader;
     std::vector<Stock> stocks = stockLoader.loadStocks("./stockDb");
-
-    //simolater test(std::move(reso))
 
     //for(auto stock: stocks){
     //    std::cout << stock << std::endl;
     //}
 
-    StockSimulator StockSimulator;
-    StockSimulator.start();
+    Analyser::StockAnalyser stockAnalyser;
+    StockSimulator stockSimulator(stocks);  
+
+    stockSimulator.attach(stockAnalyser.analyse);
+
+    Analyser::StockAnalyser stockAnalyser;
+    Render::StockRender stockRender;
+    stockAnalyser.attach(stockRender.render);
+
+    stockSimulator.start();
+
 
 
     

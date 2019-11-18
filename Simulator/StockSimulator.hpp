@@ -8,10 +8,12 @@
 
 class StockSimulator
 {
+  typedef boost::signals2::signal<void(std::vector<Stock>)> SimulatorSignal;
+
 public:
-  StockSimulator()
+  StockSimulator(std::vector<Stock> &stocks)
   {
-    stocks_ = stockLoader_.loadStocks("./stockDb");
+    stocks_ = stocks;
 
     srand(time(NULL));
 
@@ -34,16 +36,27 @@ public:
     }
   }
 
-  void attach(void (*cb)(std::vector<Stock>)) { signal_.connect(cb); }
+  void attach(const void (*cb)(std::vector<Stock>)) { 
+    signal_.connect(cb);
+    //std::cout << "attach raw pointer" << std::endl; 
+  }
+  void attach(const std::function<void(std::vector<Stock>)>& cb) {
+    signal_.connect(cb);
+    //std::cout << "attach std::function" << std::endl;
+  }
+
+  
+  
 
 private:
   StockLoader                                       stockLoader_;
   std::vector<Stock>                                stocks_;
-  boost::signals2::signal<void(std::vector<Stock>)> signal_;
+  SimulatorSignal signal_;
 
-  // static void test(std::vector<Stock> t){}
-  // attach(test);
-
+  void notify(){
+    signal_(stocks_);
+  }
+  
   void tick()
   {
     for (Stock &stock : stocks_)
@@ -51,10 +64,7 @@ private:
       generateData(stock);
     }
 
-    for (Stock &stock : stocks_)
-    {
-      std::cout << stock << std::endl;
-    }
+    notify();
   }
 
   void generateData(Stock &stock)
@@ -65,9 +75,9 @@ private:
       stock.setRising(!stock.getRising());
     }
 
-    float diff = stock.getValue() * ((float)stock.getPercentageChange() / 100);
+    float diff = stock.getStartValue() * ((float)stock.getPercentageChange() / 100);
 
-    // std::cout << "Diff: " << diff << std::endl;
+    //std::cout << "Diff: " << stock.getStartValue() << std::endl;
 
     if (stock.getRising()) // Calculate new value
     {
@@ -76,6 +86,11 @@ private:
     else
     {
       stock.setValue(stock.getValue() - diff);
+    }
+
+    if(stock.getValue() < 1.0){ // Stock is crashed
+      stock.setValue(0);
+      stock.setPercentageChange(0);
     }
   }
 };
