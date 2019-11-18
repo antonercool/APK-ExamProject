@@ -34,8 +34,8 @@ public:
   friend std::ostream &operator<<(std::ostream &o, const Stock &s);
 
 private:
-  std::string name_;
-  float       value_;
+  std::string  name_;
+  float        value_;
 
   bool         rising_;
   unsigned int uncertainty_;
