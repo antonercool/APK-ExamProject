@@ -1,7 +1,5 @@
 #include "StockRender/UIProvider.hpp"
-//#include "Stock.cpp"
-//#include "StockLoader.hpp"
-//#include "StockSimulator.hpp"
+#include "StockSimulator.hpp"
 #include <iostream>
 #include <boost/array.hpp>
 
@@ -27,6 +25,20 @@ int main(){
     cmdRender.outPutWithColor(Render::Color::GREEN, "HelloWorld\n");
     cmdRender.resetToDefaultColor();
     cmdRender.print("This should have default color\n");
+
+    StockLoader stockLoader;
+    std::vector<Stock> stocks = stockLoader.loadStocks("./stockDb");
+
+    //simolater test(std::move(reso))
+
+    //for(auto stock: stocks){
+    //    std::cout << stock << std::endl;
+    //}
+
+    StockSimulator StockSimulator;
+    StockSimulator.start();
+
+
     
     //getchar();
 

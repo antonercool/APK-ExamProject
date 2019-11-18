@@ -5,6 +5,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include "Stock/Stock.hpp"
 
 class StockLoader
 {
@@ -19,7 +20,7 @@ public:
 
   };
 
-  std::vector<Stock> *loadStocks(std::string directory)
+  std::vector<Stock>&& loadStocks(std::string directory)
   {
     stockList_.clear();
     std::vector<std::future<Stock>> futures;
@@ -34,8 +35,7 @@ public:
       std::thread(
           [entry](std::promise<Stock> p) {
             std::ifstream stockFile(entry.path());
-            Stock         s = *std::istream_iterator<Stock>(
-                stockFile); // Constructor reads first line in db-file using
+            Stock         s = *std::istream_iterator<Stock>(stockFile); // Constructor reads first line in db-file using
                             // operator>>, dereference returns current stream
                             // element
 
@@ -52,6 +52,6 @@ public:
       stockList_.push_back(future.get());
     }
 
-    return &stockList_;
+    return std::move(stockList_);
   }
 };
