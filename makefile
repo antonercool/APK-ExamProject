@@ -9,7 +9,7 @@ BUILD_PATH		=$(BUILD_DIR)
 BIN_PATH		=$(BIN_DIR)
 
 # Files
-SRC				=main.cpp UIProvider.cpp
+SRC				=$(shell find $(SRC_PATH) -name '*.cpp' | sort -k 1nr | cut -f2-)
 DEPS			=$(addprefix ${BUILD_PATH}/, $(notdir ${SRC:%.cpp=%.d}))
 OBJS			=$(addprefix ${BUILD_PATH}/, $(notdir ${SRC:%.cpp=%.o}))
 
@@ -17,6 +17,10 @@ OBJS			=$(addprefix ${BUILD_PATH}/, $(notdir ${SRC:%.cpp=%.o}))
 EXE 			=program
 HOST 			=linux
 DEBUG 			=false
+
+# All Folders should be added here
+VPATH=$(shell find $(SRC_PATH) -name '*.cpp' -exec dirname {} \; | uniq)
+#VPATH 		    =$(SRC_PATH) StockRender
 #Compiler setUp
 # To build boost to windows run bootstrap.bat then ./b2 -a toolset=gcc
 # To build boost to linux run bootstrap.bat then ./b2
@@ -26,7 +30,7 @@ BOOSTLIB		= C:/boost/lib
 BOOSTROOT 		= C:/boost_1_71_0
 INCLUDEPATHS	= -I$(SRC_PATH) -I$(BOOSTROOT)
 CXX 			= g++ 
-CXXFLAGS 		=-Wall -std=c++17 $(INCLUDEPATHS)	 # -I. = path to include files '. mean here # -Wall Show all Possible warnins
+CXXFLAGS 		=-Wall -std=c++17 $(INCLUDEPATHS) -Iinc 	 # -I. = path to include files '. mean here # -Wall Show all Possible warnins
 
 #linker flags -- please update the names for your lib
 LDFLAGS 		= -lboost_system -lboost_filesystem -lpthread #-L$(BOOSTLIB) -lboost_chrono-mgw82-mt-s-x32-1_71 -lboost_thread-mgw82-mt-s-x32-1_71 -lboost_system-mgw82-mt-s-x32-1_71

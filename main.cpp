@@ -1,18 +1,16 @@
-#include "UIProvider.hpp"
+#include "StockRender/UIProvider.hpp"
+//#include "Stock.cpp"
+//#include "StockLoader.hpp"
+//#include "StockSimulator.hpp"
 #include <iostream>
-#include "Stock.cpp"
-#include "StockLoader.hpp"
 #include <boost/array.hpp>
-#include "StockSimulator.hpp"
+
 using namespace Render;
 
 int main(){
 
 
     UIProvider cmdRender;
-
-
-    
 
     cmdRender.setColor(Render::Color::BLUE);
     cmdRender.print("This should be blue\n");

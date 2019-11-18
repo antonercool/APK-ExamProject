@@ -1,4 +1,3 @@
-
 #pragma once
 #include "StockLoader.hpp"
 #include <boost/signals2.hpp>
