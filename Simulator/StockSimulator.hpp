@@ -1,5 +1,5 @@
 #pragma once
-#include "StockLoader/StockLoader.hpp"
+#include "Loader/StockLoader.hpp"
 #include <boost/signals2.hpp>
 #include <ctime>
 #include <random>
@@ -25,7 +25,7 @@ public:
 
   void start()
   {
-    //if (signal_.empty()) throw("No callbacks attatched");
+    // if (signal_.empty()) throw("No callbacks attatched");
 
     while (1)
     {
@@ -55,7 +55,6 @@ private:
     {
       std::cout << stock << std::endl;
     }
-
   }
 
   void generateData(Stock &stock)
@@ -68,8 +67,8 @@ private:
 
     float diff = stock.getValue() * ((float)stock.getPercentageChange() / 100);
 
-    //std::cout << "Diff: " << diff << std::endl;
- 
+    // std::cout << "Diff: " << diff << std::endl;
+
     if (stock.getRising()) // Calculate new value
     {
       stock.setValue(stock.getValue() + diff);

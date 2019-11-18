@@ -1,5 +1,5 @@
-#include "StockRender/UIProvider.hpp"
-#include "StockSimulator/StockSimulator.hpp"
+#include "Render/UIProvider.hpp"
+#include "Simulator/StockSimulator.hpp"
 #include <iostream>
 #include <boost/array.hpp>
 

@@ -5,7 +5,7 @@
 #include <string>
 #include <thread>
 #include <vector>
-#include "Stock/Stock.hpp"
+#include "Model/Stock.hpp"
 
 class StockLoader
 {
