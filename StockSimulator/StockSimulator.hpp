@@ -1,5 +1,5 @@
 #pragma once
-#include "StockLoader.hpp"
+#include "StockLoader/StockLoader.hpp"
 #include <boost/signals2.hpp>
 #include <ctime>
 #include <random>
