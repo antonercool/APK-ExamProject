@@ -21,10 +21,10 @@ Analyser::StockAnalyser::StockAnalyser(/*StockSimulator &stockSimulator*/) {
   //stockSimulator.attach(boost::bind(&Analyser::StockAnalyser::analyse, this, _1));
 }
 Analyser::StockAnalyser::~StockAnalyser() {}
+Analyser::StockAnalyser::StockAnalyser(const Analyser::StockAnalyser &stockAnalyser) {}
 
 
-
-void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
+const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
 
   if (previousStockData_.empty())
@@ -47,7 +47,7 @@ void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
   }
 }
 
-void Analyser::StockAnalyser::operator()(std::vector<Stock> stocks){
+const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks){
   analyse(stocks);
 }
 

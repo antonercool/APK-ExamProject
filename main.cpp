@@ -43,23 +43,16 @@ int main(){
     //}
 
     
-    //Simulator::StockSimulator stockSimulator(stocks);  
-    //Analyser::StockAnalyser stockAnalyser/*(stockSimulator)*/;
+    Simulator::StockSimulator stockSimulator(stocks);  
+    Analyser::StockAnalyser stockAnalyser/*(stockSimulator)*/;
+
+    stockSimulator.attach(stockAnalyser);
     
-    //stockSimulator.attach(stockAnalyser);
+    
+    Render::StockRender stockRender;
+    stockAnalyser.attach(boost::bind(&Render::StockRender::render, &stockRender, _1));
 
-
-
-    //Analyser::StockAnalyser stockAnalyser;
-    //Render::StockRender stockRender;
-    //stockAnalyser.attach(boost::bind(&Render::StockRender::render, &stockRender, _1));
-
-    //stockSimulator.start();
-
-
-
+    stockSimulator.start();
     
     //getchar();
-
-
 }

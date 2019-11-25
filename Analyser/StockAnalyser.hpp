@@ -12,14 +12,14 @@ typedef std::variant<
 
 class StockAnalyser
 {
-
   typedef boost::signals2::signal<void(EventVariant)> AnalyserSignal;
 
 public:
   StockAnalyser(/*StockSimulator &stockSimulator*/);
   ~StockAnalyser();
+  StockAnalyser(const Analyser::StockAnalyser &stockAnalyser);
 
-  void operator()(std::vector<Stock> stocks);
+  const void operator()(const std::vector<Stock> &stocks);
 
   template <typename T> const void attach(const T &cb)
   {
@@ -30,8 +30,8 @@ public:
 private:
   AnalyserSignal analyserSignal_;
   std::vector<Stock>
-       previousStockData_; // Must be inline if not declared in StockAnalyser.hpp
-  void notify(const EventVariant &);
-  void analyse(std::vector<Stock> stocks);
+             previousStockData_; // Must be inline if not declared in StockAnalyser.hpp
+  void       notify(const EventVariant &);
+  const void analyse(const std::vector<Stock> &stocks);
 };
 } // namespace Analyser
