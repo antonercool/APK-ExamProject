@@ -35,8 +35,12 @@ int main()
 
   stockSimulator.attach(stockAnalyser); // Attaching StockAnalyser as a functor
 
+  //
+
   Render::StockRender stockRender;
-  stockAnalyser.attach(boost::bind(&Render::StockRender::render, &stockRender, _1)); // Attaching Render::StockRender::render using boost::bind
+  stockAnalyser.attach(boost::bind(
+      &Render::StockRender::render, &stockRender,
+      _1)); // Attaching Render::StockRender::render using boost::bind
   stockSimulator.start();
 
   // getchar();

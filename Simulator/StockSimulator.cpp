@@ -33,15 +33,16 @@ void Simulator::StockSimulator::start()
 //  signal_.connect(cb);
 //  //std::cout << "attach std::function" << std::endl;
 //}
+
 const void Simulator::StockSimulator::attach(const Analyser::StockAnalyser &cb)
 {
-  signal_.connect(cb);
-  // std::cout << "attach std::function" << std::endl;
+  signal_.connect(cb); // Calls copy contructor of StockAnalyser, therefore the
+                       // boost::signals2 analyseSignal_ in StockAnalyser must be
+                       // heapyfied for Render::StockRender to connect to the
+                       // excaty analyseSignal_ and not a copy
 }
 
-void Simulator::StockSimulator::notify() { 
-  signal_(stocks_); 
-  }
+void Simulator::StockSimulator::notify() { signal_(stocks_); }
 
 void Simulator::StockSimulator::tick()
 {
@@ -76,7 +77,7 @@ void Simulator::StockSimulator::generateData(Stock &stock)
   }
 
   if (stock.getValue() < 1.0) // Stock is crashed
-  { 
+  {
     stock.setValue(0);
     stock.setPercentageChange(0);
   }
