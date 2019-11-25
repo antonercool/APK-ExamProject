@@ -22,11 +22,9 @@ Analyser::StockAnalyser::StockAnalyser(/*StockSimulator &stockSimulator*/) {
 }
 Analyser::StockAnalyser::~StockAnalyser() {}
 
-const void Analyser::StockAnalyser::operator()(std::vector<Stock> const &stocks){
-  analyse(stocks);
-}
 
-const void Analyser::StockAnalyser::analyse(std::vector<Stock> const &stocks)
+
+void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
 {
 
   if (previousStockData_.empty())
@@ -47,6 +45,10 @@ const void Analyser::StockAnalyser::analyse(std::vector<Stock> const &stocks)
   {
     std::cout << stock << std::endl;
   }
+}
+
+void Analyser::StockAnalyser::operator()(std::vector<Stock> stocks){
+  analyse(stocks);
 }
 
 //const void Analyser::StockAnalyser::attach(

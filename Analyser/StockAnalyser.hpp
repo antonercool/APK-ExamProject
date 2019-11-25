@@ -1,6 +1,5 @@
 #pragma once
 #include "Events/StockEvents.hpp"
-#include "Simulator/StockSimulator.hpp"
 #include <boost/signals2.hpp>
 
 namespace Analyser
@@ -20,7 +19,7 @@ public:
   StockAnalyser(/*StockSimulator &stockSimulator*/);
   ~StockAnalyser();
 
-  const void operator()(std::vector<Stock> const &stocks);
+  void operator()(std::vector<Stock> stocks);
 
   template <typename T> const void attach(const T &cb)
   {
@@ -33,6 +32,6 @@ private:
   std::vector<Stock>
        previousStockData_; // Must be inline if not declared in StockAnalyser.hpp
   void notify(const EventVariant &);
-  const void analyse(std::vector<Stock> const &stocks);
+  void analyse(std::vector<Stock> stocks);
 };
 } // namespace Analyser

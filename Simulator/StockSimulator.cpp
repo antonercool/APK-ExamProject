@@ -33,13 +33,15 @@ void Simulator::StockSimulator::start()
 //  signal_.connect(cb);
 //  //std::cout << "attach std::function" << std::endl;
 //}
-void Simulator::StockSimulator::attach(const Analyser::StockAnalyser &cb)
+void Simulator::StockSimulator::attach(Analyser::StockAnalyser cb)
 {
   signal_.connect(cb);
   // std::cout << "attach std::function" << std::endl;
 }
 
-void Simulator::StockSimulator::notify() { signal_(stocks_); }
+void Simulator::StockSimulator::notify() { 
+  signal_(stocks_); 
+  }
 
 void Simulator::StockSimulator::tick()
 {

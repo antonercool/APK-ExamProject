@@ -1,9 +1,14 @@
 #include "Render/UIProvider.hpp"
 #include "Render/StockRender.hpp"
 #include "Simulator/StockSimulator.hpp"
-#include "Analyser/StockAnalyser.hpp"
 #include <iostream>
 #include <boost/array.hpp>
+
+struct X{
+    void operator()(){
+        std::cout << "bla bla" << std::endl;
+    }
+};
 
 int main(){
 
@@ -38,18 +43,18 @@ int main(){
     //}
 
     
-    Simulator::StockSimulator stockSimulator(stocks);  
-    Analyser::StockAnalyser stockAnalyser/*(stockSimulator)*/;
+    //Simulator::StockSimulator stockSimulator(stocks);  
+    //Analyser::StockAnalyser stockAnalyser/*(stockSimulator)*/;
     
-    stockSimulator.attach(stockAnalyser);
+    //stockSimulator.attach(stockAnalyser);
 
 
 
     //Analyser::StockAnalyser stockAnalyser;
-    Render::StockRender stockRender;
-    stockAnalyser.attach(boost::bind(&Render::StockRender::render, &stockRender, _1));
+    //Render::StockRender stockRender;
+    //stockAnalyser.attach(boost::bind(&Render::StockRender::render, &stockRender, _1));
 
-    stockSimulator.start();
+    //stockSimulator.start();
 
 
 

@@ -19,7 +19,7 @@ public:
   ~StockSimulator();
 
   void start();
-  void attach(const Analyser::StockAnalyser &cb);
+  void attach(Analyser::StockAnalyser cb);
 
 private:
   StockLoader        stockLoader_;
