@@ -37,14 +37,17 @@ int main(){
     //    std::cout << stock << std::endl;
     //}
 
-    Analyser::StockAnalyser stockAnalyser;
-    StockSimulator stockSimulator(stocks);  
+    
+    Simulator::StockSimulator stockSimulator(stocks);  
+    Analyser::StockAnalyser stockAnalyser/*(stockSimulator)*/;
+    
+    stockSimulator.attach(stockAnalyser);
 
-    stockSimulator.attach(stockAnalyser.analyse);
 
-    Analyser::StockAnalyser stockAnalyser;
+
+    //Analyser::StockAnalyser stockAnalyser;
     Render::StockRender stockRender;
-    stockAnalyser.attach(stockRender.render);
+    stockAnalyser.attach(boost::bind(&Render::StockRender::render, &stockRender, _1));
 
     stockSimulator.start();
 

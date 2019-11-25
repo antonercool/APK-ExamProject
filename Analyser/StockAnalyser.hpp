@@ -17,18 +17,22 @@ class StockAnalyser
   typedef boost::signals2::signal<void(EventVariant)> AnalyserSignal;
 
 public:
-  StockAnalyser();
+  StockAnalyser(/*StockSimulator &stockSimulator*/);
   ~StockAnalyser();
 
-  const void analyse(std::vector<Stock> stocks);
+  const void operator()(std::vector<Stock> const &stocks);
 
-  void attach(const std::function<void(EventVariant)> &cb);
+  template <typename T> const void attach(const T &cb)
+  {
+    analyserSignal_.connect(cb);
+  }
+  // const void attach(const std::function<void(EventVariant)> &cb);
 
 private:
   AnalyserSignal analyserSignal_;
   std::vector<Stock>
-      previousStockData_; // Must be inline if not declared in StockAnalyser.hpp
-  void notify(const EventVariant&);
-
+       previousStockData_; // Must be inline if not declared in StockAnalyser.hpp
+  void notify(const EventVariant &);
+  const void analyse(std::vector<Stock> const &stocks);
 };
 } // namespace Analyser

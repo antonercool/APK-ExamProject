@@ -17,10 +17,16 @@
 // Must be declared if not declared inline in StockAnalyser.cpp
 // std::vector<Stock> Analyser::StockAnalyser::previousStockData_;
 
-Analyser::StockAnalyser::StockAnalyser() {}
+Analyser::StockAnalyser::StockAnalyser(/*StockSimulator &stockSimulator*/) {
+  //stockSimulator.attach(boost::bind(&Analyser::StockAnalyser::analyse, this, _1));
+}
 Analyser::StockAnalyser::~StockAnalyser() {}
 
-const void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
+const void Analyser::StockAnalyser::operator()(std::vector<Stock> const &stocks){
+  analyse(stocks);
+}
+
+const void Analyser::StockAnalyser::analyse(std::vector<Stock> const &stocks)
 {
 
   if (previousStockData_.empty())
@@ -37,17 +43,17 @@ const void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
             std::back_inserter(previousStockData_));
 
   std::cout << std::endl;
-  for (Stock &stock : stocks)
+  for (Stock stock : stocks)
   {
     std::cout << stock << std::endl;
   }
 }
 
-void Analyser::StockAnalyser::attach(
-    const std::function<void(EventVariant)> &cb)
-{
-  analyserSignal_.connect(cb);
-}
+//const void Analyser::StockAnalyser::attach(
+//    const std::function<void(EventVariant)> &cb)
+//{
+//  analyserSignal_.connect(cb);
+//}
 
 void Analyser::StockAnalyser::notify(EventVariant const &eventVariant)
 {
