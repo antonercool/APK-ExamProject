@@ -29,6 +29,6 @@ Render::StockRender::~StockRender() {}
 
 const void Render::StockRender::render(Analyser::EventVariant eventVariant)
 {
-  std::visit(StockVisitor(), eventVariant);
-  
+  std::cout << "Tissekone" << std::endl;
+  std::visit(StockVisitor(), eventVariant);  
 }

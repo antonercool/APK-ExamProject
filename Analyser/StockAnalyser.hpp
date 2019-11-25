@@ -23,9 +23,9 @@ public:
 
   template <typename T> const void attach(const T &cb)
   {
+    //std::cout << "Attach"
     analyserSignal_.connect(cb);
   }
-  // const void attach(const std::function<void(EventVariant)> &cb);
 
 private:
   AnalyserSignal analyserSignal_;

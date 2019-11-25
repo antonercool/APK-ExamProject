@@ -17,25 +17,32 @@
 // Must be declared if not declared inline in StockAnalyser.cpp
 // std::vector<Stock> Analyser::StockAnalyser::previousStockData_;
 
-Analyser::StockAnalyser::StockAnalyser(/*StockSimulator &stockSimulator*/) {
-  //stockSimulator.attach(boost::bind(&Analyser::StockAnalyser::analyse, this, _1));
+Analyser::StockAnalyser::StockAnalyser(/*StockSimulator &stockSimulator*/)
+{
+  // stockSimulator.attach(boost::bind(&Analyser::StockAnalyser::analyse, this,
+  // _1));
 }
 Analyser::StockAnalyser::~StockAnalyser() {}
-Analyser::StockAnalyser::StockAnalyser(const Analyser::StockAnalyser &stockAnalyser) {}
-
+Analyser::StockAnalyser::StockAnalyser(const Analyser::StockAnalyser &stockAnalyser)
+{
+  previousStockData_ = stockAnalyser.previousStockData_;
+  analyserSignal_    = stockAnalyser.analyserSignal_;
+}
 
 const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
 
   if (previousStockData_.empty())
   {
+    
   }
   else
   {
     Events::StockIsCrashedEvent crashedEvent = {stocks[0]};
-    EventVariant eventVariant = crashedEvent;
+    EventVariant                eventVariant = crashedEvent;
     notify(eventVariant);
   }
+  
   previousStockData_.clear();
   std::copy(stocks.begin(), stocks.end(),
             std::back_inserter(previousStockData_));
@@ -47,11 +54,12 @@ const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
   }
 }
 
-const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks){
+const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
+{
   analyse(stocks);
 }
 
-//const void Analyser::StockAnalyser::attach(
+// const void Analyser::StockAnalyser::attach(
 //    const std::function<void(EventVariant)> &cb)
 //{
 //  analyserSignal_.connect(cb);
@@ -59,5 +67,6 @@ const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
 
 void Analyser::StockAnalyser::notify(EventVariant const &eventVariant)
 {
+  std::cout << "Analyser notify" << std::endl;
   analyserSignal_(eventVariant);
 }
