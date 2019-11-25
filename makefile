@@ -30,7 +30,7 @@ BOOSTLIB		= C:/boost/lib
 BOOSTROOT 		= C:/boost_1_71_0
 INCLUDEPATHS	= -I$(SRC_PATH) -I$(BOOSTROOT)
 CXX 			= g++ 
-CXXFLAGS 		=-Wall -std=c++17 $(INCLUDEPATHS) -Iinc 	 # -I. = path to include files '. mean here # -Wall Show all Possible warnins
+CXXFLAGS 		= -std=c++17 $(INCLUDEPATHS) -Iinc -O3	 # -I. = path to include files '. mean here # -Wall Show all Possible warnins
 
 #linker flags -- please update the names for your lib
 LDFLAGS 		= -lboost_system -lboost_filesystem -lpthread #-L$(BOOSTLIB) -lboost_chrono-mgw82-mt-s-x32-1_71 -lboost_thread-mgw82-mt-s-x32-1_71 -lboost_system-mgw82-mt-s-x32-1_71
