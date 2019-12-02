@@ -11,7 +11,7 @@ public:
   StockRender();
   ~StockRender();
 
-  const void render(Analyser::EventVariant eventVariant);
+  const void callback(Analyser::EventVariant eventVariant);
 
 private:
 };

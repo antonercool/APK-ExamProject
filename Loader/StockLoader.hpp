@@ -19,6 +19,8 @@ struct NoStocksException : public std::exception
   }
 };
 
+
+
 class StockLoader
 {
 private:
