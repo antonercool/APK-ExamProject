@@ -59,8 +59,8 @@ int main()
   cmdRender.resetToDefaultColor();
   cmdRender.print("This should have default color\n");
 
-  Loader::StockLoader        stockLoader;
-  std::vector<Stock> stocks;
+  Loader::StockLoader stockLoader;
+  std::vector<Stock>  stocks;
   try
   {
     stocks = stockLoader.loadStocks("./stockDb");
