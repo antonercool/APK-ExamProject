@@ -35,74 +35,81 @@ Analyser::StockAnalyser::StockAnalyser(
 
 const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
-
-  if (previousStockData_.empty())
-  {
-  }
-  else
-  {
-    // Events::StockIsCrashedEvent crashedEvent = {stocks[0]};
-    // EventVariant                eventVariant = crashedEvent;
-    // notify(eventVariant);
-  }
-
-  previousStockData_.clear();
-  std::copy(stocks.begin(), stocks.end(),
-            std::back_inserter(previousStockData_));
-
   std::cout << std::endl;
   for (Stock stock : stocks)
   {
     std::cout << stock << std::endl;
   }
+
+  if (!previousStockData_.empty())
+  {
+    for (size_t i = 0; i < stocks.size(); i++)
+    {
+      RaiseEventIfRising(previousStockData_[i], stocks[i]);
+      RaiseEventIfFalling(previousStockData_[i], stocks[i]);
+      RaiseEventIfDoubled(stocks[i]);
+      RaiseEventIfHalved(stocks[i]);
+      RaiseEventIfCrashed(stocks[i]);
+      //RaiseEventIfNormal(stocks[i]);
+    }    
+  }
+
+  previousStockData_.clear();
+  std::copy(stocks.begin(), stocks.end(),
+            std::back_inserter(previousStockData_));  
 }
 
-void Analyser::StockAnalyser::RaiseEventIfRising(const Stock &previousStock, const Stock &updatedStock)
+void Analyser::StockAnalyser::RaiseEventIfRising(const Stock &previousStock,
+                                                 const Stock &updatedStock)
 {
   if (previousStock.getValue() < updatedStock.getValue())
   {
-    notify(createEvent(Events::Event::StockValueIsRisingEventEnum, updatedStock));
+    notify(
+        createEvent(Events::Event::StockValueIsRisingEventEnum, updatedStock));
   }
 }
 
-void Analyser::StockAnalyser::RaiseEventIfFalling(const Stock &previousStock, const Stock &updatedStock)
+void Analyser::StockAnalyser::RaiseEventIfFalling(const Stock &previousStock,
+                                                  const Stock &updatedStock)
 {
   if (previousStock.getValue() > updatedStock.getValue())
   {
-    notify(createEvent(Events::Event::StockValueIsFallingEventEnum, updatedStock));
+    notify(
+        createEvent(Events::Event::StockValueIsFallingEventEnum, updatedStock));
   }
 }
 
-void Analyser::StockAnalyser::RaiseEventIfDoubled(const Stock &previousStock, const Stock &updatedStock)
+void Analyser::StockAnalyser::RaiseEventIfDoubled(const Stock &updatedStock)
 {
-  if (previousStock.getValue() < updatedStock.getValue())
+  if (updatedStock.getStartValue() * 2 <= updatedStock.getValue())
   {
-    notify(createEvent(Events::Event::StockValueIsDoubledFromStartValueEventEnum, updatedStock));
+    notify(
+        createEvent(Events::Event::StockValueIsDoubledFromStartValueEventEnum,
+                    updatedStock));
   }
 }
 
-void Analyser::StockAnalyser::RaiseEventIfHalved(const Stock &previousStock, const Stock &updatedStock)
+void Analyser::StockAnalyser::RaiseEventIfHalved(const Stock &updatedStock)
 {
-  if (previousStock.getValue() > updatedStock.getValue())
+  if (updatedStock.getStartValue() / 2 >= updatedStock.getValue())
   {
-    notify(createEvent(Events::Event::StockValueIsHalvedFromStartValueEventEnum, updatedStock));
+    notify(createEvent(Events::Event::StockValueIsHalvedFromStartValueEventEnum,
+                       updatedStock));
   }
 }
 
-void Analyser::StockAnalyser::RaiseEventIfCrashed(const Stock &previousStock, const Stock &updatedStock)
+void Analyser::StockAnalyser::RaiseEventIfCrashed(const Stock &updatedStock)
 {
-  if (previousStock.getValue() > updatedStock.getValue())
+  if (updatedStock.getValue() <= 0)
   {
     notify(createEvent(Events::Event::StockIsCrashedEventEnum, updatedStock));
   }
 }
 
-void Analyser::StockAnalyser::RaiseEventIfNormal(const Stock &previousStock, const Stock &updatedStock)
+void Analyser::StockAnalyser::RaiseEventIfNormal(const Stock &updatedStock)
 {
-  if (previousStock.getValue() > updatedStock.getValue())
-  {
-    notify(createEvent(Events::Event::StockIsNormalEventEnum, updatedStock));
-  }
+
+  notify(createEvent(Events::Event::StockIsNormalEventEnum, updatedStock));
 }
 
 const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
@@ -118,17 +125,19 @@ const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
 
 void Analyser::StockAnalyser::notify(EventVariant const &eventVariant)
 {
-  std::cout << "Analyser notify: " << analyserSignal_.get() << std::endl;
+  //std::cout << "Analyser notify: " << analyserSignal_.get() << std::endl;
   (*(analyserSignal_))(eventVariant);
 }
 
-Analyser::EventVariant Analyser::StockAnalyser::createEvent(const Events::Event event, const Stock &stock)
+Analyser::EventVariant
+Analyser::StockAnalyser::createEvent(const Events::Event event,
+                                     const Stock &       stock)
 {
   switch (event)
   {
   case Events::Event::StockValueIsRisingEventEnum:
   {
-    Events::StockIsCrashedEvent event = {stock};
+    Events::StockValueIsRisingEvent event = {stock};
     return event;
     break;
   }

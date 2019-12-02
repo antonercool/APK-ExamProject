@@ -39,10 +39,10 @@ private:
 
   void RaiseEventIfRising(const Stock &previousStock, const Stock &updatedStock);
   void RaiseEventIfFalling(const Stock &previousStock, const Stock &updatedStock);
-  void RaiseEventIfDoubled(const Stock &previousStock, const Stock &updatedStock);
-  void RaiseEventIfHalved(const Stock &previousStock, const Stock &updatedStock);
-  void RaiseEventIfCrashed(const Stock &previousStock, const Stock &updatedStock);
-  void RaiseEventIfNormal(const Stock &previousStock, const Stock &updatedStock);
+  void RaiseEventIfDoubled(const Stock &updatedStock);
+  void RaiseEventIfHalved(const Stock &updatedStock);
+  void RaiseEventIfCrashed(const Stock &updatedStock);
+  void RaiseEventIfNormal(const Stock &updatedStock);
 
   EventVariant createEvent(const Events::Event event, const Stock &stock);
 };
