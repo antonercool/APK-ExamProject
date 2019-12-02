@@ -22,6 +22,10 @@ struct StockVisitor
   {
     std::cout << "StockIsCrashedEvent: " << std::endl;
   }
+  void operator()(Events::StockIsNormalEvent arg)
+  {
+    std::cout << "StockIsCrashedEvent: " << std::endl;
+  }
 };
 
 Render::StockRender::StockRender() {}
@@ -29,6 +33,6 @@ Render::StockRender::~StockRender() {}
 
 const void Render::StockRender::render(Analyser::EventVariant eventVariant)
 {
+  //std::cout << "Tissekone" << std::endl;
   std::visit(StockVisitor(), eventVariant);
-  
 }

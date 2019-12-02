@@ -17,10 +17,23 @@
 // Must be declared if not declared inline in StockAnalyser.cpp
 // std::vector<Stock> Analyser::StockAnalyser::previousStockData_;
 
-Analyser::StockAnalyser::StockAnalyser() {}
+Analyser::StockAnalyser::StockAnalyser()
+    : analyserSignal_(new Analyser::AnalyserSignal)
+{
+  // stockSimulator.attach(boost::bind(&Analyser::StockAnalyser::analyse, this,
+  // _1));
+}
 Analyser::StockAnalyser::~StockAnalyser() {}
+Analyser::StockAnalyser::StockAnalyser(
+    const Analyser::StockAnalyser &stockAnalyser)
+{
 
-const void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
+  std::cout << "This is analyser copyConstruct" << std::endl;
+  previousStockData_ = stockAnalyser.previousStockData_;
+  analyserSignal_    = stockAnalyser.analyserSignal_;
+}
+
+const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
 
   if (previousStockData_.empty())
@@ -28,28 +41,126 @@ const void Analyser::StockAnalyser::analyse(std::vector<Stock> stocks)
   }
   else
   {
-    Events::StockIsCrashedEvent crashedEvent = {stocks[0]};
-    EventVariant eventVariant = crashedEvent;
-    notify(eventVariant);
+    // Events::StockIsCrashedEvent crashedEvent = {stocks[0]};
+    // EventVariant                eventVariant = crashedEvent;
+    // notify(eventVariant);
   }
+
   previousStockData_.clear();
   std::copy(stocks.begin(), stocks.end(),
             std::back_inserter(previousStockData_));
 
   std::cout << std::endl;
-  for (Stock &stock : stocks)
+  for (Stock stock : stocks)
   {
     std::cout << stock << std::endl;
   }
 }
 
-void Analyser::StockAnalyser::attach(
-    const std::function<void(EventVariant)> &cb)
+void Analyser::StockAnalyser::RaiseEventIfRising(const Stock &previousStock, const Stock &updatedStock)
 {
-  analyserSignal_.connect(cb);
+  if (previousStock.getValue() < updatedStock.getValue())
+  {
+    notify(createEvent(Events::Event::StockValueIsRisingEventEnum, updatedStock));
+  }
 }
+
+void Analyser::StockAnalyser::RaiseEventIfFalling(const Stock &previousStock, const Stock &updatedStock)
+{
+  if (previousStock.getValue() > updatedStock.getValue())
+  {
+    notify(createEvent(Events::Event::StockValueIsFallingEventEnum, updatedStock));
+  }
+}
+
+void Analyser::StockAnalyser::RaiseEventIfDoubled(const Stock &previousStock, const Stock &updatedStock)
+{
+  if (previousStock.getValue() < updatedStock.getValue())
+  {
+    notify(createEvent(Events::Event::StockValueIsDoubledFromStartValueEventEnum, updatedStock));
+  }
+}
+
+void Analyser::StockAnalyser::RaiseEventIfHalved(const Stock &previousStock, const Stock &updatedStock)
+{
+  if (previousStock.getValue() > updatedStock.getValue())
+  {
+    notify(createEvent(Events::Event::StockValueIsHalvedFromStartValueEventEnum, updatedStock));
+  }
+}
+
+void Analyser::StockAnalyser::RaiseEventIfCrashed(const Stock &previousStock, const Stock &updatedStock)
+{
+  if (previousStock.getValue() > updatedStock.getValue())
+  {
+    notify(createEvent(Events::Event::StockIsCrashedEventEnum, updatedStock));
+  }
+}
+
+void Analyser::StockAnalyser::RaiseEventIfNormal(const Stock &previousStock, const Stock &updatedStock)
+{
+  if (previousStock.getValue() > updatedStock.getValue())
+  {
+    notify(createEvent(Events::Event::StockIsNormalEventEnum, updatedStock));
+  }
+}
+
+const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
+{
+  analyse(stocks);
+}
+
+// const void Analyser::StockAnalyser::attach(
+//    const std::function<void(EventVariant)> &cb)
+//{
+//  analyserSignal_.connect(cb);
+//}
 
 void Analyser::StockAnalyser::notify(EventVariant const &eventVariant)
 {
-  analyserSignal_(eventVariant);
+  std::cout << "Analyser notify: " << analyserSignal_.get() << std::endl;
+  (*(analyserSignal_))(eventVariant);
+}
+
+Analyser::EventVariant Analyser::StockAnalyser::createEvent(const Events::Event event, const Stock &stock)
+{
+  switch (event)
+  {
+  case Events::Event::StockValueIsRisingEventEnum:
+  {
+    Events::StockIsCrashedEvent event = {stock};
+    return event;
+    break;
+  }
+  case Events::Event::StockValueIsFallingEventEnum:
+  {
+    Events::StockValueIsFallingEvent event = {stock};
+    return event;
+    break;
+  }
+  case Events::Event::StockValueIsDoubledFromStartValueEventEnum:
+  {
+    Events::StockValueIsDoubledFromStartValueEvent event = {stock};
+    return event;
+    break;
+  }
+  case Events::Event::StockValueIsHalvedFromStartValueEventEnum:
+  {
+    Events::StockValueIsHalvedFromStartValueEvent event = {stock};
+    return event;
+    break;
+  }
+  case Events::Event::StockIsCrashedEventEnum:
+  {
+    Events::StockIsCrashedEvent event = {stock};
+    return event;
+    break;
+  }
+  default:
+  {
+    Events::StockIsNormalEvent event = {stock};
+    return event;
+    break;
+  }
+  }
 }
