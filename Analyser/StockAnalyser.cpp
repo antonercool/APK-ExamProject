@@ -56,9 +56,7 @@ const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 
   previousStockData_.clear();
   std::copy(stocks.begin(), stocks.end(),
-            std::back_inserter(previousStockData_));
-
-  
+            std::back_inserter(previousStockData_));  
 }
 
 void Analyser::StockAnalyser::RaiseEventIfRising(const Stock &previousStock,
@@ -104,7 +102,6 @@ void Analyser::StockAnalyser::RaiseEventIfCrashed(const Stock &updatedStock)
 {
   if (updatedStock.getValue() <= 0)
   {
-    std::cout << "CRASHED: " << updatedStock.getName() << " " << updatedStock.getValue() << std::endl;
     notify(createEvent(Events::Event::StockIsCrashedEventEnum, updatedStock));
   }
 }

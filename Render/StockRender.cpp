@@ -12,7 +12,7 @@ struct StockVisitor
   }
   void operator()(Events::StockValueIsDoubledFromStartValueEvent arg)
   {
-    std::cout <<  arg.stock.getName() << ": StockValueIsDoubledFromStartValueEvent"  << std::endl;
+    std::cout <<  arg.stock.getName() << ": StockValueIsDoubledFromStartValueEvent" << std::endl;
   }
   void operator()(Events::StockValueIsHalvedFromStartValueEvent arg)
   {
@@ -20,7 +20,7 @@ struct StockVisitor
   }
   void operator()(Events::StockIsCrashedEvent arg)
   {
-    std::cout <<  arg.stock.getName() << ": StockIsCrashedEvent - " << arg.stock.getValue()  << std::endl;
+    std::cout <<  arg.stock.getName() << ": StockIsCrashedEvent" << std::endl;
   }
   void operator()(Events::StockIsNormalEvent arg)
   {
@@ -33,6 +33,5 @@ Render::StockRender::~StockRender() {}
 
 const void Render::StockRender::render(Analyser::EventVariant eventVariant)
 {
-  //std::cout << "Tissekone" << std::endl;
   std::visit(StockVisitor(), eventVariant);
 }
