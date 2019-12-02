@@ -15,6 +15,7 @@ struct has_function_operator{
     typedef long operator_not_implemented;
 
     // Hits this template function if type has implemented operator()
+    // 
     template<typename U> 
     static operator_implemented check_for_operator(decltype (&U::operator()));
 
@@ -23,7 +24,10 @@ struct has_function_operator{
     static operator_not_implemented check_for_operator(...);
 
     // gives value either 1 or 0 decided from wether the check_for_operator returns a char or a long
-    enum { value = sizeof(check_for_operator<T>(0)) == sizeof(char) };
+    //enum { value = sizeof(check_for_operator<T>(0)) == sizeof(char) };
+
+    // The reason for passing 0 in the parameter is because it can be passed to a
+    static const bool value = sizeof(check_for_operator<T>(0)) == sizeof(char);
 };
 
 template<typename T>
@@ -75,4 +79,3 @@ int main()
     std::cout << has_function_operator<Render::StockRender>::value << std::endl;  //print 0
     return 0;
 }
-
