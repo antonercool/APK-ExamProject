@@ -1,6 +1,7 @@
 #include "Simulator/StockSimulator.hpp"
 
 Simulator::StockSimulator::StockSimulator(std::vector<Stock> &stocks)
+    : firstTick_(true)
 {
   stocks_ = stocks;
 
@@ -37,8 +38,8 @@ void Simulator::StockSimulator::start()
 const void Simulator::StockSimulator::attach(const Analyser::StockAnalyser &cb)
 {
   signal_.connect(cb); // Calls copy contructor of StockAnalyser, therefore the
-                       // boost::signals2 analyseSignal_ in StockAnalyser must be
-                       // heapyfied for Render::StockRender to connect to the
+                       // boost::signals2 analyseSignal_ in StockAnalyser must
+                       // be heapyfied for Render::StockRender to connect to the
                        // excaty analyseSignal_ and not a copy
 }
 
@@ -46,10 +47,15 @@ void Simulator::StockSimulator::notify() { signal_(stocks_); }
 
 void Simulator::StockSimulator::tick()
 {
-  for (Stock &stock : stocks_)
+  if (!firstTick_)
   {
-    generateData(stock);
+    for (Stock &stock : stocks_)
+    {
+      generateData(stock);
+    }    
   }
+  
+  firstTick_ = false;
 
   notify();
 }

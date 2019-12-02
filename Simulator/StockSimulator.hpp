@@ -25,6 +25,7 @@ private:
   StockLoader        stockLoader_;
   std::vector<Stock> stocks_;
   SimulatorSignal    signal_;
+  bool firstTick_;
 
   void notify();
   void tick();
