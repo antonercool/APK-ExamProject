@@ -27,8 +27,7 @@ Analyser::StockAnalyser::~StockAnalyser() {}
 Analyser::StockAnalyser::StockAnalyser(
     const Analyser::StockAnalyser &stockAnalyser)
 {
-
-  std::cout << "This is analyser copyConstruct" << std::endl;
+  //std::cout << "This is analyser copyConstruct" << std::endl;
   previousStockData_ = stockAnalyser.previousStockData_;
   analyserSignal_    = stockAnalyser.analyserSignal_;
 }
