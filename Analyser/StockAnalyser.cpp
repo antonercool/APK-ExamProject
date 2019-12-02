@@ -28,18 +28,18 @@ Analyser::StockAnalyser::StockAnalyser(
     const Analyser::StockAnalyser &stockAnalyser)
 {
 
-  std::cout << "This is analyser copyConstruct" << std::endl;
+  //std::cout << "This is analyser copyConstruct" << std::endl;
   previousStockData_ = stockAnalyser.previousStockData_;
   analyserSignal_    = stockAnalyser.analyserSignal_;
 }
 
 const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
-  std::cout << std::endl;
-  for (Stock stock : stocks)
-  {
-    std::cout << stock << std::endl;
-  }
+  //std::cout << std::endl;
+  //for (Stock stock : stocks)
+  //{
+  //  std::cout << stock << std::endl;
+  //}
 
   if (!previousStockData_.empty())
   {
@@ -50,7 +50,6 @@ const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
       RaiseEventIfDoubled(stocks[i]);
       RaiseEventIfHalved(stocks[i]);
       RaiseEventIfCrashed(stocks[i]);
-      //RaiseEventIfNormal(stocks[i]);
     }    
   }
 
@@ -106,12 +105,6 @@ void Analyser::StockAnalyser::RaiseEventIfCrashed(const Stock &updatedStock)
   }
 }
 
-void Analyser::StockAnalyser::RaiseEventIfNormal(const Stock &updatedStock)
-{
-
-  notify(createEvent(Events::Event::StockIsNormalEventEnum, updatedStock));
-}
-
 const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
 {
   analyse(stocks);
@@ -162,12 +155,6 @@ Analyser::StockAnalyser::createEvent(const Events::Event event,
   case Events::Event::StockIsCrashedEventEnum:
   {
     Events::StockIsCrashedEvent event = {stock};
-    return event;
-    break;
-  }
-  default:
-  {
-    Events::StockIsNormalEvent event = {stock};
     return event;
     break;
   }

@@ -12,8 +12,7 @@ enum Event
   StockValueIsFallingEventEnum,
   StockValueIsDoubledFromStartValueEventEnum,
   StockValueIsHalvedFromStartValueEventEnum,
-  StockIsCrashedEventEnum,
-  StockIsNormalEventEnum
+  StockIsCrashedEventEnum
 };
 
 struct StockValueIsRisingEvent
@@ -40,11 +39,6 @@ struct StockIsCrashedEvent
 {
   const Stock &stock;
 };
-
-struct StockIsNormalEvent{
-  const Stock &stock;
-};
-
 
 
 } // namespace Events

@@ -45,20 +45,21 @@ template <typename T> auto attach(T t)
 int main()
 {
 
-  Render::UIProvider cmdRender;
+  Render::UIProvider cmdRender(100,100);
 
-  cmdRender.setColor(Render::Color::BLUE);
-  cmdRender.print("This should be blue\n");
-
-  cmdRender.setColor(Render::Color::RED);
-  cmdRender.print("This should be red\n");
-
-  cmdRender.setColor(Render::Color::GREEN);
-  cmdRender.print("This should be Green\n");
-
-  cmdRender.outPutWithColor(Render::Color::GREEN, "HelloWorld\n");
-  cmdRender.resetToDefaultColor();
-  cmdRender.print("This should have default color\n");
+  //std::cout << "\e[8;150;30t";
+  //cmdRender.setColor(Render::Color::BLUE);
+  //cmdRender.print("This should be blue\n");
+//
+  //cmdRender.setColor(Render::Color::RED);
+  //cmdRender.print("This should be red\n");
+//
+  //cmdRender.setColor(Render::Color::GREEN);
+  //cmdRender.print("This should be Green\n");
+//
+  //cmdRender.outPutWithColor(Render::Color::GREEN, "HelloWorld\n");
+  //cmdRender.resetToDefaultColor();
+  //cmdRender.print("This should have default color\n");
 
   StockLoader        stockLoader;
   std::vector<Stock> stocks = stockLoader.loadStocks("./stockDb");
@@ -68,20 +69,21 @@ int main()
 
   stockSimulator.attach(stockAnalyser); // Attaching StockAnalyser as a functor
 
-  Render::StockRender stockRender;
+  Render::StockRender stockRender(&cmdRender);
+
   stockAnalyser.attach(boost::bind(
       &Render::StockRender::render, &stockRender,
       _1)); // Attaching Render::StockRender::render using boost::bind
 
   // getchar();
 
-  attach(stockAnalyser);
-  attach(stockRender);
-  std::cout << has_function_operator<Analyser::StockAnalyser>::value
-            << std::endl; // print 1
-  std::cout << has_function_operator<Render::StockRender>::value
-            << std::endl; // print 0
-
+  //attach(stockAnalyser);
+  //attach(stockRender);
+  //std::cout << has_function_operator<Analyser::StockAnalyser>::value
+  //          << std::endl; // print 1
+  //std::cout << has_function_operator<Render::StockRender>::value
+  //          << std::endl; // print 0
+//
   stockSimulator.start();
   return 0;
 }

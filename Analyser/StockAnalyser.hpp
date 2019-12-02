@@ -7,7 +7,7 @@ namespace Analyser
 {
 typedef std::variant<Events::StockValueIsRisingEvent, Events::StockValueIsFallingEvent,
                      Events::StockValueIsDoubledFromStartValueEvent,
-                     Events::StockValueIsHalvedFromStartValueEvent, Events::StockIsCrashedEvent, Events::StockIsNormalEvent>
+                     Events::StockValueIsHalvedFromStartValueEvent, Events::StockIsCrashedEvent>
     EventVariant;
 
 typedef boost::signals2::signal<void(EventVariant)> AnalyserSignal;
