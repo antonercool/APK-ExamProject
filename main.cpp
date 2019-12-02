@@ -38,7 +38,6 @@ auto attach(T t){
     else {
         std::cout << "den har IKKE function operator" << std::endl;
     }
-    
 }
 
 int main()
