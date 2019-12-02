@@ -31,7 +31,7 @@ struct StockVisitor
 Render::StockRender::StockRender() {}
 Render::StockRender::~StockRender() {}
 
-const void Render::StockRender::render(Analyser::EventVariant eventVariant)
+const void Render::StockRender::callback(Analyser::EventVariant eventVariant)
 {
   //std::cout << "Tissekone" << std::endl;
   std::visit(StockVisitor(), eventVariant);
