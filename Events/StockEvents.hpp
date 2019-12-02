@@ -4,7 +4,6 @@
 
 namespace Events
 {
-  
 
 enum Event
 {
@@ -16,35 +15,28 @@ enum Event
   StockIsNormalEventEnum
 };
 
-struct StockValueIsRisingEvent
+struct StockEventBase
 {
   const Stock &stock;
 };
 
-struct StockValueIsFallingEvent
+struct StockValueIsRisingEvent : StockEventBase
 {
-  const Stock &stock;
 };
-
-struct StockValueIsDoubledFromStartValueEvent
+struct StockValueIsFallingEvent : StockEventBase
 {
-  const Stock &stock;
 };
-
-struct StockValueIsHalvedFromStartValueEvent
+struct StockValueIsDoubledFromStartValueEvent : StockEventBase
 {
-  const Stock &stock;
 };
-
-struct StockIsCrashedEvent
+struct StockValueIsHalvedFromStartValueEvent : StockEventBase
 {
-  const Stock &stock;
 };
-
-struct StockIsNormalEvent{
-  const Stock &stock;
+struct StockIsCrashedEvent : StockEventBase
+{
 };
-
-
+struct StockIsNormalEvent : StockEventBase
+{
+};
 
 } // namespace Events
