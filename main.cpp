@@ -44,7 +44,6 @@ template <typename T> auto attach(T t)
 
 int main()
 {
-
   Render::UIProvider cmdRender;
 
   cmdRender.setColor(Render::Color::BLUE);
@@ -60,8 +59,27 @@ int main()
   cmdRender.resetToDefaultColor();
   cmdRender.print("This should have default color\n");
 
-  StockLoader        stockLoader;
-  std::vector<Stock> stocks = stockLoader.loadStocks("./stockDb");
+  Loader::StockLoader        stockLoader;
+  std::vector<Stock> stocks;
+  try
+  {
+    stocks = stockLoader.loadStocks("./stockDb");
+  }
+  catch (boost::filesystem::filesystem_error &e)
+  {
+    std::cout << "Bad directory. Handle this..." << std::endl;
+    throw;
+  }
+  catch (Loader::NoStocksException &e)
+  {
+    std::cout << "No stocks. Handle this..." << std::endl;
+    throw;
+  }
+  catch (...)
+  {
+    std::cout << "Unknown exception." << std::endl;
+    throw;
+  }
 
   Simulator::StockSimulator stockSimulator(stocks);
   Analyser::StockAnalyser   stockAnalyser /*(stockSimulator)*/;

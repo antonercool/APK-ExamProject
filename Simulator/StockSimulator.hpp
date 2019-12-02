@@ -22,7 +22,6 @@ public:
   const void attach(const Analyser::StockAnalyser &cb);
 
 private:
-  StockLoader        stockLoader_;
   std::vector<Stock> stocks_;
   SimulatorSignal    signal_;
   bool firstTick_;
