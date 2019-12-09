@@ -22,10 +22,6 @@ struct StockVisitor
   {
     std::cout <<  arg.stock.getName() << ": StockIsCrashedEvent" << std::endl;
   }
-  void operator()(Events::StockIsNormalEvent arg)
-  {
-    std::cout << arg.stock.getName() << ": StockIsNormalEvent" << std::endl;
-  }
 };
 
 Render::StockRender::StockRender() {}
