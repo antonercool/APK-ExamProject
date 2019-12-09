@@ -158,5 +158,12 @@ Analyser::StockAnalyser::createEvent(const Events::Event event,
     return event;
     break;
   }
+  default:
+  {
+    // return what ? 
+    break;
+  }
+    
+  
   }
 }

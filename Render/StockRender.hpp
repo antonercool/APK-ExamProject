@@ -28,14 +28,14 @@ public:
   void operator()(Events::StockValueIsDoubledFromStartValueEvent arg);
   void operator()(Events::StockValueIsHalvedFromStartValueEvent arg);
   void operator()(Events::StockIsCrashedEvent arg);
-  
+
   const void render(Analyser::EventVariant eventVariant);
  
 
 private:
   Render::UIProvider* uiProvider_;
    std::map<std::string, Render::UIInformation> stocksMap_;
-   void registorRenderInfo(const Stock & stock);
+   void registerRenderInfo(const Stock & stock);
    void printInfo(const Render::UIInformation& info, const Stock & stock);
   
 
