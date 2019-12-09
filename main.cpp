@@ -35,13 +35,16 @@ template <typename T, typename A>
 auto attach(T &t, A &a)
 {
   std::cout << "attach method" << std::endl;
-  if constexpr (has_function_operator<T>::value)    // This is for our stockSimulator
+  if constexpr (has_function_operator<T>::value)    // stockSimulator.attach(stockAnalyser)
   {
     std::cout << "den har function operator" << std::endl;
     a.attach(t);
   }
-  else                                              // This is for our stock render
+  else                                               // stockAnalyser.attach(render)
   {
+    //std::function<void(Analyser::EventVariant)> fn = boost::bind(&T::callback, &t, _1);
+    //a.attach(fn);
+    
     a.attach(boost::bind(&T::callback, &t, _1));
     std::cout << "Ingen functions og men der er attach methoder" << std::endl;
   }

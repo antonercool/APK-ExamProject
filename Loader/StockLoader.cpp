@@ -1,5 +1,7 @@
 #include "Loader/StockLoader.hpp"
 
+namespace fs = boost::filesystem;
+
 Loader::StockLoader::StockLoader(){
 
 };
@@ -13,10 +15,9 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   stockList_.clear();
   std::vector<std::future<Stock>> futures;
 
-  boost::filesystem::path               path = directory;
-  boost::filesystem::directory_iterator dir_it =
-      boost::filesystem::directory_iterator(
-          path); // If this throws, exception is caught in main.cpp
+  fs::path               path   = directory;
+  fs::directory_iterator dir_it = fs::directory_iterator(
+      path); // If this throws, exception is caught in main.cpp
 
   for (const auto &entry : dir_it)
   {

@@ -12,7 +12,7 @@ namespace Simulator
 
 class StockSimulator
 {
-  typedef boost::signals2::signal<void(std::vector<Stock>)> SimulatorSignal;
+  typedef boost::signals2::signal<void(std::vector<Stock>&)> SimulatorSignal;
 
 public:
   StockSimulator(std::vector<Stock> &stocks);

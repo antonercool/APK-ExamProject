@@ -11,6 +11,8 @@ public:
 
   Stock();
 
+  //Stock(const Stock &stock);
+
   const std::string &getName() const;
 
   const float &getValue() const;
