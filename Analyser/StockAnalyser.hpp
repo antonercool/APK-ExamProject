@@ -5,11 +5,10 @@
 
 namespace Analyser
 {
-typedef std::variant<Events::StockValueIsRisingEvent,
-                     Events::StockValueIsFallingEvent,
-                     Events::StockValueIsDoubledFromStartValueEvent,
-                     Events::StockValueIsHalvedFromStartValueEvent,
-                     Events::StockIsCrashedEvent>
+typedef std::variant<
+    Events::StockValueIsRisingEvent, Events::StockValueIsFallingEvent,
+    Events::StockValueIsDoubledFromStartValueEvent,
+    Events::StockValueIsHalvedFromStartValueEvent, Events::StockIsCrashedEvent>
     EventVariant;
 
 typedef boost::signals2::signal<void(EventVariant)> AnalyserSignal;
@@ -24,8 +23,15 @@ public:
 
   const void operator()(const std::vector<Stock> &stocks);
 
-  template <typename T> const void attach(const T &cb)
+  const void attach(const std::function<void(EventVariant)> &cb)
   {
+    std::cout << "std::function attach" << std::endl;
+    analyserSignal_->connect(cb);
+  }
+
+   template <typename T> const void attach(const T &cb)
+  {
+    std::cout << "template attach" << std::endl;
     // std::cout << "Analyser attach: " << analyserSignal_.get() << std::endl;
     analyserSignal_->connect(cb); // Calls copy contructor of StockRender, which
                                   // is okay because the pip ends
