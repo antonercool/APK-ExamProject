@@ -1,5 +1,7 @@
 #include "Loader/StockLoader.hpp"
 
+namespace fs = boost::filesystem;
+
 Loader::StockLoader::StockLoader(){
 
 };
@@ -21,20 +23,27 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
 {
   stockList_.clear();
 
-  boost::filesystem::path               path = directory;
-  boost::filesystem::directory_iterator dir_it =
-      boost::filesystem::directory_iterator(
-          path); // If this throws, exception is caught in main.cpp
+  fs::path               path   = directory;
+  fs::directory_iterator dir_it = fs::directory_iterator(
+      path); // If this throws, exception is caught in main.cpp
 
   for (const auto &entry : dir_it)
   {
     std::promise<Stock> p;
+<<<<<<< HEAD
     std::future<Stock>  f = p.get_future();
     
     addFutureToWaitingList(std::move(f));
     
+=======
+    std::future<Stock>  f = p.get_future(); // You can only call get_future() once
+    futures.push_back(
+        std::move(f)); // std::future is not CopyConsructable or Assignable ->
+                       // Move future resource to vector
+
+>>>>>>> master
     std::thread(
-        [entry](std::promise<Stock> p) {
+        [&, entry](std::promise<Stock> &&p) {
           std::ifstream stockFile(entry.path());
           Stock         s = *std::istream_iterator<Stock>(
               stockFile); // Constructor reads first line in db-file using
@@ -44,7 +53,9 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
           p.set_value(s);
           stockFile.close();
         },
-        std::move(p)) // Move promise to thead function
+        std::move(p)) // Sharing a std::promise between two threads is bad, the
+                      // resource must have unique ownership -> Move promise to
+                      // thead function
         .detach();
   }
 

@@ -21,6 +21,17 @@ Stock::Stock()
 
 const std::string &Stock::getName() const { return name_; }
 
+//Stock::Stock(const Stock &stock)
+//{
+//  name_ = stock.name_;
+//  value_ = stock.value_;
+//  startValue_ = stock.startValue_;
+//  rising_ = stock.rising_;
+//  uncertainty_ = stock.uncertainty_;
+//  percentageChange_ = stock.percentageChange_;
+//  std::cout << "Stock copyConstructor: " << name_ << std::endl;
+//}
+
 // void Stock::setName(std::string name) { name_ = name; }
 
 const float &Stock::getValue() const { return value_; }

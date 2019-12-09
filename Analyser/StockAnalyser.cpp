@@ -103,11 +103,7 @@ const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
   analyse(stocks);
 }
 
-// const void Analyser::StockAnalyser::attach(
-//    const std::function<void(EventVariant)> &cb)
-//{
-//  analyserSignal_.connect(cb);
-//}
+ 
 
 void Analyser::StockAnalyser::notify(EventVariant const &eventVariant)
 {
