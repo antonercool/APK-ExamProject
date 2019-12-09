@@ -49,7 +49,6 @@ const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
       RaiseEventIfDoubled(stocks[i]);
       RaiseEventIfHalved(stocks[i]);
       RaiseEventIfCrashed(stocks[i]);
-      //RaiseEventIfNormal(stocks[i]);
     }    
   }
 
@@ -103,12 +102,6 @@ void Analyser::StockAnalyser::RaiseEventIfCrashed(const Stock &updatedStock)
   {
     notify(createEvent(Events::Event::StockIsCrashedEventEnum, updatedStock));
   }
-}
-
-void Analyser::StockAnalyser::RaiseEventIfNormal(const Stock &updatedStock)
-{
-
-  notify(createEvent(Events::Event::StockIsNormalEventEnum, updatedStock));
 }
 
 const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
@@ -166,8 +159,6 @@ Analyser::StockAnalyser::createEvent(const Events::Event event,
   }
   default:
   {
-    Events::StockIsNormalEvent event = {stock};
-    return event;
     break;
   }
   }
