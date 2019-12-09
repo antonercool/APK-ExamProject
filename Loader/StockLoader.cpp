@@ -23,10 +23,12 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   {
     std::promise<Stock> p;
     std::future<Stock>  f = p.get_future();
-    futures.push_back(std::move(f)); // Move future resource to vector
+    futures.push_back(
+        std::move(f)); // std::future is not CopyConsructable or Assignable ->
+                       // Move future resource to vector
 
     std::thread(
-        [entry](std::promise<Stock> p) {
+        [&, entry](std::promise<Stock> &&p) {
           std::ifstream stockFile(entry.path());
           Stock         s = *std::istream_iterator<Stock>(
               stockFile); // Constructor reads first line in db-file using
@@ -36,7 +38,9 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
           p.set_value(s);
           stockFile.close();
         },
-        std::move(p)) // Move promise to thead function
+        std::move(p)) // Sharing a std::promise between two threads is bad, the
+                      // resource must have unique ownership -> Move promise to
+                      // thead function
         .detach();
   }
 
