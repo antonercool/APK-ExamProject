@@ -35,8 +35,5 @@ struct StockValueIsHalvedFromStartValueEvent : StockEventBase
 struct StockIsCrashedEvent : StockEventBase
 {
 };
-struct StockIsNormalEvent : StockEventBase
-{
-};
 
 } // namespace Events

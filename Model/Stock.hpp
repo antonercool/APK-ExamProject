@@ -13,8 +13,6 @@ public:
 
   const std::string &getName() const;
 
-  //void setName(std::string name);
-
   const float &getValue() const;
 
   void setValue(float value);
