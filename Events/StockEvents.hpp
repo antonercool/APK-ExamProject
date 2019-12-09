@@ -11,8 +11,7 @@ enum Event
   StockValueIsFallingEventEnum,
   StockValueIsDoubledFromStartValueEventEnum,
   StockValueIsHalvedFromStartValueEventEnum,
-  StockIsCrashedEventEnum,
-  StockIsNormalEventEnum
+  StockIsCrashedEventEnum
 };
 
 struct StockEventBase
