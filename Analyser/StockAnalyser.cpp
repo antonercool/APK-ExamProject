@@ -34,12 +34,6 @@ Analyser::StockAnalyser::StockAnalyser(
 
 const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
-  //std::cout << std::endl;
-  //for (Stock stock : stocks)
-  //{
-  //  std::cout << stock << std::endl;
-  //}
-
   if (!previousStockData_.empty())
   {
     for (size_t i = 0; i < stocks.size(); i++)

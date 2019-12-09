@@ -22,7 +22,7 @@ public:
 
 
   void start();
-  const void attach(const Analyser::StockAnalyser &cb);
+  const void attach( std::function<void(std::vector<Stock>)>&);
 
 private:
   std::vector<Stock> stocks_;
