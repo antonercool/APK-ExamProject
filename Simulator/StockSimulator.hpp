@@ -18,11 +18,13 @@ public:
   StockSimulator(std::vector<Stock> &stocks);
   ~StockSimulator();
 
+  StockSimulator(const Simulator::StockSimulator &stockSimulator);
+
+
   void start();
   const void attach(const Analyser::StockAnalyser &cb);
 
 private:
-  StockLoader        stockLoader_;
   std::vector<Stock> stocks_;
   SimulatorSignal    signal_;
   bool firstTick_;

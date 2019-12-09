@@ -20,7 +20,7 @@ namespace Render{
         void removeCurser(); // remove blinking curser
         
     public:
-        UIProvider(unsigned int height, unsigned int width);
+        UIProvider();
         ~UIProvider();
 
         std::string generateStringWithColor(std::string, Color);

@@ -14,6 +14,9 @@ Simulator::StockSimulator::StockSimulator(std::vector<Stock> &stocks)
 Simulator::StockSimulator::~StockSimulator(){
 
 };
+Simulator::StockSimulator::StockSimulator(const Simulator::StockSimulator &stockSimulator)
+{
+}
 
 void Simulator::StockSimulator::start()
 {

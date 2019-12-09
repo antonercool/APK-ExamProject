@@ -100,7 +100,7 @@ Render::StockRender::StockRender(Render::UIProvider *provider) : uiProvider_(pro
 
 Render::StockRender::~StockRender() {}
 
-const void Render::StockRender::render(Analyser::EventVariant eventVariant)
+const void Render::StockRender::callback(Analyser::EventVariant eventVariant)
 {
   std::visit(*this, eventVariant);
 }

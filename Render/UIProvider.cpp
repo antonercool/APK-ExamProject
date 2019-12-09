@@ -33,5 +33,9 @@ void UIProvider::removeCurser(){
     std::cout << "\e[?25l" << std::endl;
 }
 
+std::string UIProvider::generateStringWithColor(std::string toCreate, Color color){
+     std::string stringToBuild = "\033[" + std::to_string((int)color) + "m" + toCreate + "\033[0m";
+     return stringToBuild;
+ }
 
 

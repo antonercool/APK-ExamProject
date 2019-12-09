@@ -28,9 +28,8 @@ public:
   void operator()(Events::StockValueIsDoubledFromStartValueEvent arg);
   void operator()(Events::StockValueIsHalvedFromStartValueEvent arg);
   void operator()(Events::StockIsCrashedEvent arg);
-
-  const void render(Analyser::EventVariant eventVariant);
  
+  const void callback(Analyser::EventVariant eventVariant);
 
 private:
   Render::UIProvider* uiProvider_;

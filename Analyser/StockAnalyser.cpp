@@ -27,7 +27,6 @@ Analyser::StockAnalyser::~StockAnalyser() {}
 Analyser::StockAnalyser::StockAnalyser(
     const Analyser::StockAnalyser &stockAnalyser)
 {
-
   //std::cout << "This is analyser copyConstruct" << std::endl;
   previousStockData_ = stockAnalyser.previousStockData_;
   analyserSignal_    = stockAnalyser.analyserSignal_;
@@ -160,7 +159,6 @@ Analyser::StockAnalyser::createEvent(const Events::Event event,
   }
   default:
   {
-    // return what ? 
     break;
   }
     
