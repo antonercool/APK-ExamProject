@@ -51,19 +51,6 @@ int main()
 {
   Render::UIProvider cmdRender;
 
-  cmdRender.setColor(Render::Color::BLUE);
-  cmdRender.print("This should be blue\n");
-
-  cmdRender.setColor(Render::Color::RED);
-  cmdRender.print("This should be red\n");
-
-  cmdRender.setColor(Render::Color::GREEN);
-  cmdRender.print("This should be Green\n");
-
-  cmdRender.outPutWithColor(Render::Color::GREEN, "HelloWorld\n");
-  cmdRender.resetToDefaultColor();
-  cmdRender.print("This should have default color\n");
-
   Loader::StockLoader stockLoader;
   std::vector<Stock>  stocks;
   try
@@ -93,8 +80,8 @@ int main()
   // functor
   attach(stockAnalyser, stockSimulator);
 
-  Render::StockRender stockRender;
-
+  Render::StockRender stockRender(&cmdRender);
+  
   // vi bliver nødt til at ligge boost::bind funktionen over i en variabel for at give den med til attach()
   // da boost::bind er en R-value og vi skal give en L value med til typename. 
   //auto cb = boost::bind(&Render::StockRender::callback, &stockRender, _1);
@@ -104,13 +91,7 @@ int main()
   //    &Render::StockRender::render, &stockRender,
   //    _1)); // Attaching Render::StockRender::render using boost::bind
   
-  
   stockSimulator.start();
 
-  // getchar();
-  std::cout << has_function_operator<Analyser::StockAnalyser>::value
-            << std::endl; // print 1
-  std::cout << has_function_operator<Render::StockRender>::value
-            << std::endl; // print 0
   return 0;
 }

@@ -34,11 +34,11 @@ Analyser::StockAnalyser::StockAnalyser(
 
 const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
 {
-  std::cout << std::endl;
-  for (Stock stock : stocks)
-  {
-    std::cout << stock << std::endl;
-  }
+  //std::cout << std::endl;
+  //for (Stock stock : stocks)
+  //{
+  //  std::cout << stock << std::endl;
+  //}
 
   if (!previousStockData_.empty())
   {
@@ -161,5 +161,7 @@ Analyser::StockAnalyser::createEvent(const Events::Event event,
   {
     break;
   }
+    
+  
   }
 }
