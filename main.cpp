@@ -38,11 +38,13 @@ auto attach(T &t, A &a)
   if constexpr (has_function_operator<T>::value)    // This is for our stockSimulator
   {
     std::cout << "den har function operator" << std::endl;
-    a.attach(t);
+    std::function<void(std::vector<Stock>)> callback = t;
+    a.attach(callback);
   }
   else                                              // This is for our stock render
   {
-    a.attach(boost::bind(&T::callback, &t, _1));
+    std::function<void(Analyser::EventVariant)> callback = boost::bind(&T::callback, &t, _1);
+    a.attach(callback);
     std::cout << "Ingen functions og men der er attach methoder" << std::endl;
   }
 }

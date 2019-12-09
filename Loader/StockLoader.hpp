@@ -25,10 +25,12 @@ class StockLoader
 {
 private:
   std::vector<Stock> stockList_;
-
+    void addFutureToWaitingList(std::future<Stock> &&);
+    std::vector<std::future<Stock>> futures_;
 public:
   StockLoader();
   ~StockLoader();
+
 
   std::vector<Stock> &&loadStocks(std::string directory);
 };

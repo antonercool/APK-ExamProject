@@ -8,10 +8,18 @@ Loader::StockLoader::~StockLoader(){
 
 };
 
+// Only created for 'Perfect forwarding'
+ void Loader::StockLoader::addFutureToWaitingList(std::future<Stock> && future){
+     futures_.push_back(std::forward<std::future<Stock>>(future));
+
+     // future get treated at l value  // future not copyable // deleted function error
+     //futures_.push_back(future);
+
+ }
+
 std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
 {
   stockList_.clear();
-  std::vector<std::future<Stock>> futures;
 
   boost::filesystem::path               path = directory;
   boost::filesystem::directory_iterator dir_it =
@@ -22,8 +30,9 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   {
     std::promise<Stock> p;
     std::future<Stock>  f = p.get_future();
-    futures.push_back(std::move(f)); // Move future resource to vector
-
+    
+    addFutureToWaitingList(std::move(f));
+    
     std::thread(
         [entry](std::promise<Stock> p) {
           std::ifstream stockFile(entry.path());
@@ -39,7 +48,7 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
         .detach();
   }
 
-  if (futures.empty())
+  if (futures_.empty())
   {
     throw NoStocksException();
   }
@@ -49,7 +58,7 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   // the temp-list into our stocklist. (swap is a no-throw guarentee function)
   std::vector<Stock> tempStockList(stockList_);
 
-  for (std::future<Stock> &future : futures)
+  for (std::future<Stock> &future : futures_)
   {
     future.wait();
     tempStockList.push_back(future.get());
