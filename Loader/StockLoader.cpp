@@ -22,7 +22,7 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   for (const auto &entry : dir_it)
   {
     std::promise<Stock> p;
-    std::future<Stock>  f = p.get_future();
+    std::future<Stock>  f = p.get_future(); // You can only call get_future() once
     futures.push_back(
         std::move(f)); // std::future is not CopyConsructable or Assignable ->
                        // Move future resource to vector
