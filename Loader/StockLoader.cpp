@@ -10,15 +10,6 @@ Loader::StockLoader::~StockLoader(){
 
 };
 
-// Only created for 'Perfect forwarding'
- void Loader::StockLoader::addFutureToWaitingList(std::future<Stock> && future){
-     futures_.push_back(std::forward<std::future<Stock>>(future));
-
-     // future get treated at l value  // future not copyable // deleted function error
-     //futures_.push_back(future);
-
- }
-
 std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
 {
   stockList_.clear();
@@ -30,18 +21,10 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   for (const auto &entry : dir_it)
   {
     std::promise<Stock> p;
-<<<<<<< HEAD
     std::future<Stock>  f = p.get_future();
-    
-    addFutureToWaitingList(std::move(f));
-    
-=======
-    std::future<Stock>  f = p.get_future(); // You can only call get_future() once
-    futures.push_back(
-        std::move(f)); // std::future is not CopyConsructable or Assignable ->
-                       // Move future resource to vector
 
->>>>>>> master
+    addFutureToWaitingList(std::move(f));
+
     std::thread(
         [&, entry](std::promise<Stock> &&p) {
           std::ifstream stockFile(entry.path());
@@ -77,4 +60,14 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   stockList_.swap(tempStockList);
 
   return std::move(stockList_);
+}
+
+// Only created for 'Perfect forwarding'
+void Loader::StockLoader::addFutureToWaitingList(std::future<Stock> &&future)
+{
+  futures_.push_back(std::forward<std::future<Stock>>(future));
+
+  // future get treated at l value  // future not copyable // deleted function
+  // error
+  // futures_.push_back(future);
 }
