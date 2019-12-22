@@ -57,7 +57,11 @@ int main()
   std::vector<Stock>  stocks;
   try
   {
-    stocks = stockLoader.loadStocks("./stockDb");
+    std::string aStocksDb = "./aStocksDb";
+    std::string bStocksDb = "./bStocksDb";
+    std::string cStocksDb = "./cStocksDb";
+    stockLoader.loadStocks(aStocksDb, bStocksDb, cStocksDb);
+    stocks = stockLoader.getStocks();
   }
   catch (boost::filesystem::filesystem_error &e)
   {
