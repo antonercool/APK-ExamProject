@@ -23,17 +23,17 @@ public:
   StockRender(Render::UIProvider* provider);
   ~StockRender();
 
-  void operator()(Events::StockValueIsRisingEvent arg);
-  void operator()(Events::StockValueIsFallingEvent arg);
-  void operator()(Events::StockValueIsDoubledFromStartValueEvent arg);
-  void operator()(Events::StockValueIsHalvedFromStartValueEvent arg);
-  void operator()(Events::StockIsCrashedEvent arg);
+  void operator()(Events::StockValueIsRisingEvent& arg);
+  void operator()(Events::StockValueIsFallingEvent& arg);
+  void operator()(Events::StockValueIsDoubledFromStartValueEvent& arg);
+  void operator()(Events::StockValueIsHalvedFromStartValueEvent& arg);
+  void operator()(Events::StockIsCrashedEvent& arg);
  
   const void callback(Analyser::EventVariant eventVariant);
 
 private:
   Render::UIProvider* uiProvider_;
-   std::map<std::string, Render::UIInformation> stocksMap_;
+   std::map<const std::string, Render::UIInformation> stocksMap_;
    void registerRenderInfo(const Stock & stock);
    void printInfo(const Render::UIInformation& info, const Stock & stock);
   

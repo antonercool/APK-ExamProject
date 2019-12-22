@@ -57,34 +57,34 @@ void Render::StockRender::registerRenderInfo(const Stock & stock){
  
 }
 
-void Render::StockRender::operator()(Events::StockValueIsRisingEvent arg)
+void Render::StockRender::operator()(Events::StockValueIsRisingEvent& arg)
 {
   registerRenderInfo(arg.stock);
   stocksMap_[arg.stock.getName()].isRising = true;
   printInfo(stocksMap_[arg.stock.getName()], arg.stock);
 
 }
-void Render::StockRender::operator()(Events::StockValueIsFallingEvent arg)
+void Render::StockRender::operator()(Events::StockValueIsFallingEvent& arg)
 {
   registerRenderInfo(arg.stock);
   stocksMap_[arg.stock.getName()].isRising = false;
   printInfo(stocksMap_[arg.stock.getName()], arg.stock);
 }
 
-void Render::StockRender::operator()(Events::StockValueIsDoubledFromStartValueEvent arg)
+void Render::StockRender::operator()(Events::StockValueIsDoubledFromStartValueEvent& arg)
 {
   registerRenderInfo(arg.stock);
   stocksMap_[arg.stock.getName()].isDouble = true;
   printInfo(stocksMap_[arg.stock.getName()], arg.stock);
 }
-void Render::StockRender::operator()(Events::StockValueIsHalvedFromStartValueEvent arg)
+void Render::StockRender::operator()(Events::StockValueIsHalvedFromStartValueEvent& arg)
 {
   registerRenderInfo(arg.stock);
   stocksMap_[arg.stock.getName()].isHalfed = true;
   printInfo(stocksMap_[arg.stock.getName()], arg.stock);
 }
 
-void Render::StockRender::operator()(Events::StockIsCrashedEvent arg)
+void Render::StockRender::operator()(Events::StockIsCrashedEvent& arg)
 {
   registerRenderInfo(arg.stock);
   stocksMap_[arg.stock.getName()].isCrashed = true;
@@ -95,8 +95,6 @@ Render::StockRender::StockRender(Render::UIProvider *provider) : uiProvider_(pro
 {
   uiProvider_->initUI();
 }
-
-
 
 Render::StockRender::~StockRender() {}
 
