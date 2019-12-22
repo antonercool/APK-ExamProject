@@ -15,13 +15,13 @@ class StockSimulator
   typedef boost::signals2::signal<void(std::vector<Stock> &)> SimulatorSignal;
 
 public:
-  StockSimulator(std::vector<Stock> &stocks);
+  StockSimulator();
   ~StockSimulator();
 
   StockSimulator(const Simulator::StockSimulator &stockSimulator);
 
 
-  void start();
+  void start(std::vector<Stock> &stocks);
   
   template<typename T>
   const void attach(T & cb)
