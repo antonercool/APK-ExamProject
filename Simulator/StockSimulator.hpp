@@ -22,7 +22,16 @@ public:
 
 
   void start();
-  const void attach( std::function<void(std::vector<Stock>)>&);
+  
+  template<typename T>
+  const void attach(T & cb)
+  {
+
+    signal_.connect(cb); // Calls copy contructor of StockAnalyser, therefore the
+                       // boost::signals2 analyseSignal_ in StockAnalyser must
+                       // be heapyfied for Render::StockRender to connect to the
+                       // excaty analyseSignal_ and not a copy
+  }
 
 private:
   std::vector<Stock> stocks_;
