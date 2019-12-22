@@ -39,6 +39,7 @@ private:
 
   void notify();
   void tick();
+  void sleep(int milliseconds);
   void generateData(Stock &stock);
 };
 
