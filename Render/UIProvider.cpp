@@ -21,7 +21,7 @@ void UIProvider::initUI(){
 
  // Fully Clear CMD GUI
 void UIProvider::clearUI(){
-    std::system("clear");
+    //std::system("clear");
 } 
 
 // Edit some chars on UI for performance (parcial)
