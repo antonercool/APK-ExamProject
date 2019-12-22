@@ -10,10 +10,8 @@ Loader::StockLoader::~StockLoader(){
 
 };
 
-std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
+void Loader::StockLoader::loadStocks(std::string &directory)
 {
-  stockList_.clear();
-
   fs::path               path   = directory;
   fs::directory_iterator dir_it = fs::directory_iterator(
       path); // If this throws, exception is caught in main.cpp
@@ -46,7 +44,11 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   {
     throw NoStocksException();
   }
+}
 
+
+std::vector<Stock> &&Loader::StockLoader::getStocks()
+{
   // Using swap to implement a strong guarentee where we make the possibly
   // exception throwing operations on a temp-list where we afterwards swaps
   // the temp-list into our stocklist. (swap is a no-throw guarentee function)
@@ -57,7 +59,7 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
     future.wait();
     tempStockList.push_back(future.get());
   }
-  
+
   std::swap(stockList_, tempStockList);
 
   return std::move(stockList_);

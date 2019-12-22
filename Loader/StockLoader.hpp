@@ -22,14 +22,21 @@ struct NoStocksException : public std::exception
 class StockLoader
 {
 private:
-  std::vector<Stock> stockList_;
-    void addFutureToWaitingList(std::future<Stock> &&);
-    std::vector<std::future<Stock>> futures_;
+  std::vector<Stock>              stockList_;
+  void                            addFutureToWaitingList(std::future<Stock> &&);
+  std::vector<std::future<Stock>> futures_;
+
 public:
   StockLoader();
   ~StockLoader();
 
-
-  std::vector<Stock> &&loadStocks(std::string directory);
+  void                            loadStocks(std::string &directory);
+  template <typename... T> 
+  void loadStocks(std::string &arg, T &... args)
+  {
+    loadStocks(arg);
+    loadStocks(args...);
+  }
+  std::vector<Stock> &&getStocks();
 };
 } // namespace Loader

@@ -12,7 +12,7 @@ namespace Simulator
 
 class StockSimulator
 {
-  typedef boost::signals2::signal<void(std::vector<Stock>&)> SimulatorSignal;
+  typedef boost::signals2::signal<void(std::vector<Stock> &)> SimulatorSignal;
 
 public:
   StockSimulator(std::vector<Stock> &stocks);
@@ -26,7 +26,6 @@ public:
   template<typename T>
   const void attach(T & cb)
   {
-
     signal_.connect(cb); // Calls copy contructor of StockAnalyser, therefore the
                        // boost::signals2 analyseSignal_ in StockAnalyser must
                        // be heapyfied for Render::StockRender to connect to the
@@ -36,7 +35,7 @@ public:
 private:
   std::vector<Stock> stocks_;
   SimulatorSignal    signal_;
-  bool firstTick_;
+  bool               firstTick_;
 
   void notify();
   void tick();
