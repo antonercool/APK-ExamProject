@@ -1,4 +1,5 @@
 #pragma once
+#include "IsSame/IsSame.hpp"
 #include "Model/Stock.hpp"
 #include <boost/filesystem.hpp>
 #include <exception>
@@ -25,15 +26,18 @@ private:
   std::vector<Stock>              stockList_;
   void                            addFutureToWaitingList(std::future<Stock> &&);
   std::vector<std::future<Stock>> futures_;
+  void                            loadStocks(std::string &directory);
 
 public:
   StockLoader();
   ~StockLoader();
 
-  void                            loadStocks(std::string &directory);
-  template <typename... T> 
-  void loadStocks(std::string &arg, T &... args)
+  template <typename T, typename... Args>
+  void loadStocks(T &arg, Args &... args)
   {
+    static_assert(IsSame<T, std::string>::value,
+                  "All arguments must be of type std::string");
+
     loadStocks(arg);
     loadStocks(args...);
   }
