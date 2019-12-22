@@ -23,16 +23,9 @@ public:
 
   const void operator()(const std::vector<Stock> &stocks);
 
-  const void attach(const std::function<void(EventVariant)> &cb)
+  template <typename T> const void attach(const T &cb)
   {
-    std::cout << "std::function attach" << std::endl;
-    analyserSignal_->connect(cb);
-  }
-
-   template <typename T> const void attach(const T &cb)
-  {
-    std::cout << "template attach" << std::endl;
-    // std::cout << "Analyser attach: " << analyserSignal_.get() << std::endl;
+    
     analyserSignal_->connect(cb); // Calls copy contructor of StockRender, which
                                   // is okay because the pip ends
   }
@@ -46,10 +39,8 @@ private:
   const void   analyse(const std::vector<Stock> &stocks);
   EventVariant createEvent(const Events::Event event, const Stock &stock);
 
-  void RaiseEventIfRising(const Stock &previousStock,
-                          const Stock &updatedStock);
-  void RaiseEventIfFalling(const Stock &previousStock,
-                           const Stock &updatedStock);
+  void RaiseEventIfRising(const Stock &previousStock,  const Stock& updatedStock);
+  void RaiseEventIfFalling(const Stock &previousStock, const Stock& updatedStock);
   void RaiseEventIfDoubled(const Stock &updatedStock);
   void RaiseEventIfHalved(const Stock &updatedStock);
   void RaiseEventIfCrashed(const Stock &updatedStock);
