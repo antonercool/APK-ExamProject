@@ -38,16 +38,7 @@ void Simulator::StockSimulator::start()
 //  //std::cout << "attach std::function" << std::endl;
 //}
 
-const void Simulator::StockSimulator::attach( std::function<void(std::vector<Stock>)> & cb)
-{
 
- // std::function<void(std::vector<Stock>)> test = cb;
-
-  signal_.connect(cb); // Calls copy contructor of StockAnalyser, therefore the
-                       // boost::signals2 analyseSignal_ in StockAnalyser must
-                       // be heapyfied for Render::StockRender to connect to the
-                       // excaty analyseSignal_ and not a copy
-}
 
 void Simulator::StockSimulator::notify() { signal_(stocks_); }
 
