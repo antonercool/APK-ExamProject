@@ -1,10 +1,8 @@
 #include "Simulator/StockSimulator.hpp"
 
-Simulator::StockSimulator::StockSimulator(std::vector<Stock> &stocks)
+Simulator::StockSimulator::StockSimulator()
     : firstTick_(true)
 {
-  stocks_ = stocks;
-
   srand(time(NULL));
 
   // for(Stock stock: *stocks){
@@ -18,8 +16,9 @@ Simulator::StockSimulator::StockSimulator(const Simulator::StockSimulator &stock
 {
 }
 
-void Simulator::StockSimulator::start()
+void Simulator::StockSimulator::start(std::vector<Stock> &stocks)
 {
+  stocks_ = stocks;
   // if (signal_.empty()) throw("No callbacks attatched");
 
   while (1)
