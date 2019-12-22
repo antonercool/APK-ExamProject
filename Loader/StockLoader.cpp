@@ -10,15 +10,6 @@ Loader::StockLoader::~StockLoader(){
 
 };
 
-// Only created for 'Perfect forwarding'
- void Loader::StockLoader::addFutureToWaitingList(std::future<Stock> && future){
-     futures_.push_back(std::forward<std::future<Stock>>(future));
-
-     // future get treated at l value  // future not copyable // deleted function error
-     //futures_.push_back(future);
-
- }
-
 std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
 {
   stockList_.clear();
@@ -31,7 +22,7 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
   {
     std::promise<Stock> p;
     std::future<Stock>  f = p.get_future();
-    
+
     addFutureToWaitingList(std::move(f));
     
     std::thread(
@@ -66,7 +57,18 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
     future.wait();
     tempStockList.push_back(future.get());
   }
-  stockList_.swap(tempStockList);
+  
+  std::swap(stockList_, tempStockList);
 
   return std::move(stockList_);
+}
+
+// Only created for 'Perfect forwarding'
+void Loader::StockLoader::addFutureToWaitingList(std::future<Stock> &&future)
+{
+  futures_.push_back(std::forward<std::future<Stock>>(future));
+
+  // future get treated at l value  // future not copyable // deleted function
+  // error
+  // futures_.push_back(future);
 }
