@@ -4,7 +4,7 @@
 
 namespace Render{    
     
-   enum Color {
+   enum class Color {
         RED         = 31,
         GREEN       = 32,
         YELLOW      = 33,

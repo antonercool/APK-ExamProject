@@ -5,7 +5,7 @@
 namespace Events
 {
 
-enum Event
+enum class Event
 {
   StockValueIsRisingEventEnum,
   StockValueIsFallingEventEnum,

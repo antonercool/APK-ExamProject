@@ -43,15 +43,8 @@ auto attach(T &t, A &a)
   }
   else                                               // stockAnalyser.attach(render)
   {
-<<<<<<< HEAD
     std::function<void(Analyser::EventVariant)> callback = boost::bind(&T::callback, &t, _1);
     a.attach(callback);
-=======
-    //std::function<void(Analyser::EventVariant)> fn = boost::bind(&T::callback, &t, _1);
-    //a.attach(fn);
-    
-    a.attach(boost::bind(&T::callback, &t, _1));
->>>>>>> master
     std::cout << "Ingen functions og men der er attach methoder" << std::endl;
   }
 }
