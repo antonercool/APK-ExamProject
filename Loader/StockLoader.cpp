@@ -57,7 +57,8 @@ std::vector<Stock> &&Loader::StockLoader::loadStocks(std::string directory)
     future.wait();
     tempStockList.push_back(future.get());
   }
-  stockList_.swap(tempStockList);
+  
+  std::swap(stockList_, tempStockList);
 
   return std::move(stockList_);
 }
