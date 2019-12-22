@@ -24,10 +24,14 @@ void Simulator::StockSimulator::start(std::vector<Stock> &stocks)
   while (1)
   {
     tick();
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    sleep(2000);
   }
 }
 
+void Simulator::StockSimulator::sleep(int milliseconds)
+{
+  std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
 // void attach(const void (*cb)(std::vector<Stock>)) {
 //  signal_.connect(cb);
 //  //std::cout << "attach raw pointer" << std::endl;
