@@ -1,7 +1,7 @@
 #pragma once
 #include "boost/bind.hpp"
 
-namespace HasFunctionOperator
+namespace Attacher
 {
 
 template <typename T> struct has_function_operator
@@ -21,22 +21,22 @@ template <typename T> struct has_function_operator
   // returns a char or a long
   // enum { value = sizeof(check_for_operator<T>(0)) == sizeof(char) };
 
-  // The reason for passing 0 in the parameter is because it can be passed to a
+  // The reason for passing 0/nullptr in the parameter is because it can be
+  // passed to a member function pointer
   static const bool value = sizeof(check_for_operator<T>(0)) == sizeof(char);
 };
 
 template <typename T, typename A> auto attach(T &t, A &a)
 {
-  if constexpr (has_function_operator<
-                    T>::value) // stockSimulator.attach(stockAnalyser)
+  if constexpr (has_function_operator<T>::value)
   {
-    // den har function operator
-    a.attach(t);
+    // This has function operator
+    a.attach(t); // stockSimulator.attach(stockAnalyser)
   }
-  else // stockAnalyser.attach(render)
+  else
   {
-    // den har ikke function operator
-    a.attach(boost::bind(&T::callback, &t, _1));
+    // This does not have function operator
+    a.attach(boost::bind(&T::callback, &t, _1)); // stockAnalyser.attach(render)
   }
 }
-}
+} // namespace Attacher

@@ -22,7 +22,7 @@ void Loader::StockLoader::loadStocks(std::string &directory)
     std::future<Stock>  f = p.get_future();
 
     addFutureToWaitingList(std::move(f));
-    
+
     std::thread(
         [&, entry](std::promise<Stock> &&p) {
           std::ifstream stockFile(entry.path());
@@ -45,7 +45,6 @@ void Loader::StockLoader::loadStocks(std::string &directory)
     throw NoStocksException();
   }
 }
-
 
 std::vector<Stock> &&Loader::StockLoader::getStocks()
 {
