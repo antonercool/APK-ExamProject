@@ -10,7 +10,6 @@ template <typename T> struct has_function_operator
   typedef long operator_not_implemented;
 
   // Hits this template function if type has implemented operator()
-  //
   template <typename U>
   static operator_implemented check_for_operator(decltype(&U::operator()));
 
