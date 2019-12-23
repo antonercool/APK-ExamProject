@@ -1,33 +1,13 @@
 #include "Analyser/StockAnalyser.hpp"
 
-// REF: SØREN
-// template <typename T>
-// typename std::enable_if<std::is_trivially_copyable<T>::value>::type
-// Copy(T *first, T *last, T *dest)
-//{
-//  memcpy(dest, first, sizeof(T) * (last-first));
-//}
-// template <typename T>
-// typename std::enable_if<!std::is_trivially_copyable<T>::value>::type
-// Copy(T *first, T *last, T *dest)
-//{
-//  for (; first != last; ++first, ++dest) *dest = *first;
-//}
-
-// Must be declared if not declared inline in StockAnalyser.cpp
-// std::vector<Stock> Analyser::StockAnalyser::previousStockData_;
-
 Analyser::StockAnalyser::StockAnalyser()
     : analyserSignal_(new Analyser::AnalyserSignal)
 {
-  // stockSimulator.attach(boost::bind(&Analyser::StockAnalyser::analyse, this,
-  // _1));
 }
 Analyser::StockAnalyser::~StockAnalyser() {}
 Analyser::StockAnalyser::StockAnalyser(
     const Analyser::StockAnalyser &stockAnalyser)
 {
-  //std::cout << "This is analyser copyConstruct" << std::endl;
   previousStockData_ = stockAnalyser.previousStockData_;
   analyserSignal_    = stockAnalyser.analyserSignal_;
 }
@@ -43,12 +23,12 @@ const void Analyser::StockAnalyser::analyse(const std::vector<Stock> &stocks)
       RaiseEventIfDoubled(stocks[i]);
       RaiseEventIfHalved(stocks[i]);
       RaiseEventIfCrashed(stocks[i]);
-    }    
+    }
   }
 
   previousStockData_.clear();
   std::copy(stocks.begin(), stocks.end(),
-            std::back_inserter(previousStockData_));  
+            std::back_inserter(previousStockData_));
 }
 
 void Analyser::StockAnalyser::RaiseEventIfRising(const Stock &previousStock,
@@ -103,11 +83,8 @@ const void Analyser::StockAnalyser::operator()(const std::vector<Stock> &stocks)
   analyse(stocks);
 }
 
- 
-
 void Analyser::StockAnalyser::notify(EventVariant const &eventVariant)
 {
-  //std::cout << "Analyser notify: " << analyserSignal_.get() << std::endl;
   (*(analyserSignal_))(eventVariant);
 }
 
@@ -151,7 +128,5 @@ Analyser::StockAnalyser::createEvent(const Events::Event event,
   {
     break;
   }
-    
-  
   }
 }

@@ -26,11 +26,12 @@ private:
   std::vector<Stock>              stockList_;
   void                            addFutureToWaitingList(std::future<Stock> &&);
   std::vector<std::future<Stock>> futures_;
-  void                            loadStocks(std::string &directory);
 
 public:
   StockLoader();
   ~StockLoader();
+
+  void loadStocks(std::string &directory);
 
   template <typename T, typename... Args>
   void loadStocks(T &arg, Args &... args)

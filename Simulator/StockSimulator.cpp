@@ -1,18 +1,14 @@
 #include "Simulator/StockSimulator.hpp"
 
-Simulator::StockSimulator::StockSimulator()
-    : firstTick_(true)
+Simulator::StockSimulator::StockSimulator() : firstTick_(true)
 {
   srand(time(NULL));
-
-  // for(Stock stock: *stocks){
-  //    std::cout << stock << std::endl;
-  //}
 };
 Simulator::StockSimulator::~StockSimulator(){
 
 };
-Simulator::StockSimulator::StockSimulator(const Simulator::StockSimulator &stockSimulator)
+Simulator::StockSimulator::StockSimulator(
+    const Simulator::StockSimulator &stockSimulator)
 {
 }
 
@@ -32,16 +28,6 @@ void Simulator::StockSimulator::sleep(int milliseconds)
 {
   std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
-// void attach(const void (*cb)(std::vector<Stock>)) {
-//  signal_.connect(cb);
-//  //std::cout << "attach raw pointer" << std::endl;
-//}
-// void attach(const std::function<void(std::vector<Stock>&)>& cb) {
-//  signal_.connect(cb);
-//  //std::cout << "attach std::function" << std::endl;
-//}
-
-
 
 void Simulator::StockSimulator::notify() { signal_(stocks_); }
 
@@ -52,9 +38,9 @@ void Simulator::StockSimulator::tick()
     for (Stock &stock : stocks_)
     {
       generateData(stock);
-    }    
+    }
   }
-  
+
   firstTick_ = false;
 
   notify();
@@ -70,8 +56,6 @@ void Simulator::StockSimulator::generateData(Stock &stock)
 
   float diff =
       stock.getStartValue() * ((float)stock.getPercentageChange() / 100);
-
-  // std::cout << "Diff: " << stock.getStartValue() << std::endl;
 
   if (stock.getRising()) // Calculate new value
   {

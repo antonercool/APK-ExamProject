@@ -1,4 +1,4 @@
-#include "HasFunctionOperator/HasFunctionOperator.hpp"
+#include "Attacher/Attacher.hpp"
 #include "Render/StockRender.hpp"
 #include "Render/UIProvider.hpp"
 #include "Simulator/StockSimulator.hpp"
@@ -35,24 +35,16 @@ int main()
   }
 
   Simulator::StockSimulator stockSimulator;
-  Analyser::StockAnalyser   stockAnalyser /*(stockSimulator)*/;
+  Analyser::StockAnalyser   stockAnalyser;
 
-  // stockSimulator.attach(stockAnalyser); // Attaching StockAnalyser as a
-  // functor
-  HasFunctionOperator::attach(stockAnalyser, stockSimulator);
+  Attacher::attach(stockAnalyser,
+                   stockSimulator); // Attaching StockAnalyser as a functor
 
   Render::UIProvider  cmdRender;
   Render::StockRender stockRender(&cmdRender);
 
-  // vi bliver nødt til at ligge boost::bind funktionen over i en variabel for
-  // at give den med til attach() da boost::bind er en R-value og vi skal give
-  // en L value med til typename.
-  // auto cb = boost::bind(&Render::StockRender::callback, &stockRender, _1);
-  HasFunctionOperator::attach(stockRender, stockAnalyser);
-
-  // stockAnalyser.attach(boost::bind(
-  //    &Render::StockRender::render, &stockRender,
-  //    _1)); // Attaching Render::StockRender::render using boost::bind
+  Attacher::attach(stockRender,
+                   stockAnalyser); // Attaching StockRender callback
 
   stockSimulator.start(stocks);
 
