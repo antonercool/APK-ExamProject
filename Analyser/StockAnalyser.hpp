@@ -30,10 +30,9 @@ public:
   }
 
 private:
-  // Analyser::AnalyserSignal analyserSignal_;
   boost::shared_ptr<Analyser::AnalyserSignal> analyserSignal_;
   std::vector<Stock>
-               previousStockData_; // Must be inline if not declared in StockAnalyser.hpp
+               previousStockData_; 
   void         notify(const EventVariant &eventVariant);
   const void   analyse(const std::vector<Stock> &stocks);
   EventVariant createEvent(const Events::Event event, const Stock &stock);
