@@ -2,14 +2,6 @@
 #include <iostream>
 #include <string>
 
-// Stock::Stock(const std::string &name, const float &value, bool rising,
-//             unsigned int uncertainty, unsigned int percentageChange)
-//    : name_(name),
-//      value_(value),
-//      startValue_(value),
-//      rising_(rising),
-//      uncertainty_(uncertainty),
-//      percentageChange_(percentageChange){};
 
 Stock::Stock()
     : name_(""),
@@ -20,19 +12,6 @@ Stock::Stock()
       percentageChange_(0){};
 
 const std::string &Stock::getName() const { return name_; }
-
-//Stock::Stock(const Stock &stock)
-//{
-//  name_ = stock.name_;
-//  value_ = stock.value_;
-//  startValue_ = stock.startValue_;
-//  rising_ = stock.rising_;
-//  uncertainty_ = stock.uncertainty_;
-//  percentageChange_ = stock.percentageChange_;
-//  std::cout << "Stock copyConstructor: " << name_ << std::endl;
-//}
-
-// void Stock::setName(std::string name) { name_ = name; }
 
 const float &Stock::getValue() const { return value_; }
 

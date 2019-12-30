@@ -3,14 +3,6 @@
 
 using namespace Render;
 
-UIProvider::UIProvider(){
-   
-}
- 
-UIProvider::~UIProvider(){
-    
-}
-
 // Initialize base CMD GUI
 void UIProvider::initUI(){
     // Remove blinking curser
