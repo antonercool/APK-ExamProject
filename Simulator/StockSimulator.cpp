@@ -15,7 +15,7 @@ Simulator::StockSimulator::StockSimulator(
 void Simulator::StockSimulator::start(std::vector<Stock> &stocks)
 {
   stocks_ = stocks;
-  // if (signal_.empty()) throw("No callbacks attatched");
+   if (signal_.empty()) throw("No callbacks attatched");
 
   while (1)
   {

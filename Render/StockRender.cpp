@@ -101,7 +101,6 @@ void Render::StockRender::operator()(Events::StockIsCrashedEvent &arg)
   registerRenderInfo(arg.stock);
   stocksMap_[arg.stock.getName()].isCrashed = true;
   printInfo(stocksMap_[arg.stock.getName()], arg.stock);
-  ;
 }
 
 Render::StockRender::StockRender(Render::UIProvider *provider)

@@ -30,12 +30,12 @@ template <typename T, typename A> auto attach(T &t, A &a)
   if constexpr (has_function_operator<T>::value)
   {
     // This has function operator
-    a.attach(t); // stockSimulator.attach(stockAnalyser)
+    a.attach(t); 
   }
   else
   {
     // This does not have function operator
-    a.attach(boost::bind(&T::callback, &t, _1)); // stockAnalyser.attach(render)
+    a.attach(boost::bind(&T::callback, &t, _1));
   }
 }
 } // namespace Attacher

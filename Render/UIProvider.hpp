@@ -20,9 +20,6 @@ namespace Render{
         void removeCurser(); // remove blinking curser
         
     public:
-        UIProvider();
-        ~UIProvider();
-
         std::string generateStringWithColor(std::string, Color);
         void initUI();   // Initialize base CMD GUI
         void clearUI();  // Fully Clear CMD GUI
