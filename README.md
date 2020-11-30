@@ -1,7 +1,7 @@
 # APK-ExamProject
 
 ```diff
-@@ Inspiration only -> husk at lav jeres eget project noobs ;)  @@
+ Inspiration only -> husk at lav jeres eget project noobs ;)  
 ```
 
 
